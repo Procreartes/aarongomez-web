@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarón Gómez — Humorista · Actor · Presentador</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ============================================
+           RESET & VARIABLES
+           ============================================ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #0a0a0a;
+            --black-light: #111111;
+            --black-card: #151515;
+            --black-hover: #1a1a1a;
+            --gold: #d4a853;
+            --gold-light: #e8c97a;
+            --gold-dark: #b8923f;
+            --coral: #e86c5a;
+            --coral-dark: #c95545;
+            --white: #ffffff;
+            --white-soft: #e0e0e0;
+            --gray: #888888;
+            --gray-dark: #333333;
+            --green-gira: #4ecb71;
+            --red-pasado: #e05555;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', 'Montserrat', sans-serif;
+            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --shadow-gold: 0 0 40px rgba(212, 168, 83, 0.15);
+        }
+
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--black);
+            color: var(--white-soft);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           CUSTOM CURSOR (desktop only)
+           ============================================ */
+        .cursor-dot, .cursor-ring {
+            position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 99999;
+            border-radius: 50%; transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+        }
+        .cursor-dot { width: 8px; height: 8px; background: var(--gold); }
+        .cursor-ring {
+            width: 40px; height: 40px;
+            border: 1.5px solid rgba(212, 168, 83, 0.5);
+            transition: width 0.3s, height 0.3s, border-color 0.3s;
+        }
+        .cursor-ring.hover { width: 60px; height: 60px; border-color: var(--gold); }
+        @media (max-width: 768px) { .cursor-dot, .cursor-ring { display: none; } }
+
+        /* ============================================
+           UTILITY CLASSES
+           ============================================ */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .container-wide { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+        .section-label {
+            font-family: var(--font-body); font-size: 0.75rem; font-weight: 600;
+            letter-spacing: 4px; text-transform: uppercase; color: var(--gold);
+            margin-bottom: 16px; display: inline-block;
+        }
+        .section-title {
+            font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 24px;
+        }
+        .gold-line { width: 60px; height: 2px; background: var(--gold); margin-bottom: 32px; }
+
+        /* Photo placeholders */
+        .img-placeholder {
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #252525 50%, #1a1a1a 100%);
+            position: relative; overflow: hidden; display: flex;
+            align-items: center; justify-content: center;
+        }
+        .img-placeholder::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(212, 168, 83, 0.06) 50%, transparent 70%);
+            animation: shimmer 4s infinite;
+        }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+        .img-placeholder .photo-label {
+            font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--gray-dark); text-align: center; padding: 12px;
+            position: relative; z-index: 1;
+            border: 1px dashed rgba(255,255,255,0.08); max-width: 80%;
+        }
+
+        /* Reveal animations */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-60px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(60px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        /* ============================================
+           BUTTONS
+           ============================================ */
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 16px 40px; background: var(--gold); color: var(--black);
+            font-family: var(--font-body); font-size: 0.85rem; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
+            border: none; cursor: pointer; transition: all var(--transition);
+            position: relative; overflow: hidden;
+        }
+        .btn-primary::before {
+            content: ''; position: absolute; inset: 0; background: var(--gold-light);
+            transform: translateX(-100%); transition: transform var(--transition);
+        }
+        .btn-primary:hover::before { transform: translateX(0); }
+        .btn-primary span { position: relative; z-index: 1; }
+        .btn-primary:hover { box-shadow: var(--shadow-gold); transform: translateY(-2px); }
+
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 16px 40px; background: transparent; color: var(--white);
+            font-family: var(--font-body); font-size: 0.85rem; font-weight: 500;
+            letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.25); cursor: pointer;
+            transition: all var(--transition);
+        }
+        .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+        .btn-coral {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 14px 32px; background: var(--coral); color: var(--white);
+            font-family: var(--font-body); font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none;
+            border: none; cursor: pointer; transition: all var(--transition);
+            border-radius: 2px;
+        }
+        .btn-coral:hover { background: var(--coral-dark); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232, 108, 90, 0.3); }
+
+        .btn-outline-sm {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 10px 20px; background: transparent;
+            color: var(--white-soft); font-size: 0.7rem; font-weight: 500;
+            letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none;
+            border: 1px solid var(--gray-dark); cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-outline-sm:hover { border-color: var(--gold); color: var(--gold); }
+
+        .btn-text {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--gold); font-size: 0.85rem; font-weight: 500;
+            letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
+            margin-top: 32px; transition: gap var(--transition);
+        }
+        .btn-text:hover { gap: 16px; }
+
+        /* ============================================
+           PAGE LOADER
+           ============================================ */
+        .page-loader {
+            position: fixed; inset: 0; background: var(--black); z-index: 100000;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 24px;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .page-loader.hidden { opacity: 0; visibility: hidden; }
+        .loader-name {
+            font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+            color: var(--white); letter-spacing: 6px; text-transform: uppercase;
+        }
+        .loader-bar { width: 120px; height: 2px; background: var(--gray-dark); overflow: hidden; }
+        .loader-bar::after {
+            content: ''; display: block; width: 100%; height: 100%;
+            background: var(--gold); animation: loaderProgress 1.5s ease forwards;
+        }
+        @keyframes loaderProgress { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+
+        /* ============================================
+           NAVBAR
+           ============================================ */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 20px 0;
+            transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
+        }
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 12px 0; box-shadow: 0 2px 40px rgba(0, 0, 0, 0.5);
+        }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; }
+
+        .navbar-logo {
+            font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+            color: var(--white); text-decoration: none; letter-spacing: 3px; text-transform: uppercase;
+        }
+        .navbar-logo span { color: var(--gold); }
+
+        .navbar-menu { display: flex; list-style: none; gap: 28px; align-items: center; }
+        .navbar-menu a {
+            font-size: 0.75rem; font-weight: 500; color: var(--white-soft);
+            text-decoration: none; letter-spacing: 1.5px; text-transform: uppercase;
+            position: relative; transition: color var(--transition);
+        }
+        .navbar-menu a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0; width: 0;
+            height: 1px; background: var(--gold); transition: width var(--transition);
+        }
+        .navbar-menu a:hover { color: var(--gold); }
+        .navbar-menu a:hover::after { width: 100%; }
+
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            cursor: pointer; z-index: 1001; padding: 8px;
+        }
+        .hamburger span {
+            display: block; width: 28px; height: 2px; background: var(--white);
+            transition: all 0.3s ease; transform-origin: center;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .mobile-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(10, 10, 10, 0.98); z-index: 999;
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .mobile-overlay.open { display: flex; opacity: 1; }
+        .mobile-menu { list-style: none; text-align: center; display: flex; flex-direction: column; gap: 24px; }
+        .mobile-menu a {
+            font-family: var(--font-display); font-size: 1.6rem;
+            color: var(--white); text-decoration: none; transition: color 0.3s;
+        }
+        .mobile-menu a:hover { color: var(--gold); }
+
+        @media (max-width: 960px) { .navbar-menu { display: none; } .hamburger { display: flex; } }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            position: relative; height: 100vh; min-height: 700px;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background:
+                linear-gradient(180deg, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.4) 40%, rgba(10,10,10,0.85) 100%),
+                url('img/hero-bg.jpg') center/cover no-repeat;
+            z-index: 0;
+        }
+        .hero-particles { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
+        .particle {
+            position: absolute; width: 2px; height: 2px; background: var(--gold);
+            border-radius: 50%; opacity: 0; animation: floatParticle 8s infinite ease-in-out;
+        }
+        @keyframes floatParticle {
+            0%, 100% { opacity: 0; transform: translateY(0) scale(1); }
+            25% { opacity: 0.6; }
+            50% { opacity: 0.3; transform: translateY(-200px) scale(1.5); }
+            75% { opacity: 0.5; }
+        }
+        .hero::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%;
+            height: 200px; background: linear-gradient(to bottom, transparent, var(--black)); z-index: 2;
+        }
+        .hero-content { position: relative; z-index: 3; max-width: 900px; padding: 0 24px; }
+        .hero-pretitle {
+            font-size: 0.8rem; font-weight: 500; letter-spacing: 6px;
+            text-transform: uppercase; color: var(--gold); margin-bottom: 24px;
+            opacity: 0; animation: fadeInUp 1s ease 0.3s forwards;
+        }
+        .hero-title {
+            font-family: var(--font-display); font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900; color: var(--white); line-height: 0.95;
+            letter-spacing: -1px; margin-bottom: 24px;
+            opacity: 0; animation: fadeInUp 1s ease 0.5s forwards;
+        }
+        .hero-title .gold { color: var(--gold); }
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 300;
+            color: var(--gray); letter-spacing: 3px; margin-bottom: 48px;
+            opacity: 0; animation: fadeInUp 1s ease 0.8s forwards;
+        }
+        .hero-subtitle .sep { display: inline-block; color: var(--gold); margin: 0 8px; }
+        .hero-ctas {
+            display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+            opacity: 0; animation: fadeInUp 1s ease 1.1s forwards;
+        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .scroll-indicator {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            z-index: 3; display: flex; flex-direction: column; align-items: center;
+            gap: 8px; color: var(--gray); font-size: 0.7rem; letter-spacing: 2px;
+            text-transform: uppercase; opacity: 0; animation: fadeInUp 1s ease 1.5s forwards;
+        }
+        .scroll-indicator .mouse {
+            width: 24px; height: 38px; border: 1.5px solid var(--gray);
+            border-radius: 12px; position: relative;
+        }
+        .scroll-indicator .mouse::after {
+            content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+            width: 3px; height: 8px; background: var(--gold); border-radius: 2px;
+            animation: scrollAnim 2s infinite;
+        }
+        @keyframes scrollAnim { 0% { opacity: 1; transform: translateX(-50%) translateY(0); } 100% { opacity: 0; transform: translateX(-50%) translateY(12px); } }
+
+        /* ============================================
+           NUEVO SHOW — GRACIAS (Banner destacado)
+           ============================================ */
+        .nuevo-show {
+            padding: 120px 0;
+            position: relative; overflow: hidden;
+        }
+        .nuevo-show::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(232, 108, 90, 0.06) 0%, transparent 60%),
+                linear-gradient(180deg, var(--black) 0%, #0e0a08 50%, var(--black) 100%);
+        }
+        .nuevo-show .container { position: relative; z-index: 1; }
+
+        .nuevo-show-grid {
+            display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center;
+        }
+        .nuevo-show-poster {
+            aspect-ratio: 1/1; position: relative; overflow: hidden;
+            border: 1px solid rgba(232, 108, 90, 0.15);
+        }
+        .nuevo-show-poster .img-placeholder {
+            background: linear-gradient(135deg, #1a1210 0%, #201510 50%, #1a1210 100%);
+        }
+        .nuevo-show-badge {
+            position: absolute; top: 20px; left: 20px;
+            background: var(--coral); color: var(--white);
+            font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; padding: 6px 16px; z-index: 2;
+        }
+        .nuevo-show-content .estreno-date {
+            font-size: 0.85rem; color: var(--coral); font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+        }
+        .nuevo-show-content h2 {
+            font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900; color: var(--white); margin-bottom: 8px; line-height: 1;
+        }
+        .nuevo-show-content .show-by {
+            font-size: 0.9rem; color: var(--gray); font-weight: 300;
+            margin-bottom: 24px; font-style: italic;
+        }
+        .nuevo-show-content blockquote {
+            font-family: var(--font-display); font-size: 1.1rem; font-style: italic;
+            color: var(--white-soft); line-height: 1.7; margin-bottom: 24px;
+            padding-left: 20px; border-left: 2px solid var(--coral);
+        }
+        .nuevo-show-content p { font-size: 0.95rem; color: var(--gray); font-weight: 300; margin-bottom: 16px; }
+        .nuevo-show-meta {
+            display: flex; gap: 32px; margin: 32px 0; padding: 24px 0;
+            border-top: 1px solid var(--gray-dark); border-bottom: 1px solid var(--gray-dark);
+        }
+        .meta-item { text-align: center; }
+        .meta-item .meta-val { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--white); }
+        .meta-item .meta-label { font-size: 0.7rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+        .nuevo-show-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+        @media (max-width: 768px) {
+            .nuevo-show-grid { grid-template-columns: 1fr; gap: 40px; }
+            .nuevo-show-poster { max-width: 400px; margin: 0 auto; }
+            .nuevo-show-meta { gap: 20px; }
+        }
+
+        /* ============================================
+           ABOUT SECTION
+           ============================================ */
+        .about { padding: 140px 0; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .about-image { position: relative; aspect-ratio: 3/4; overflow: hidden; }
+        .about-image-frame {
+            position: absolute; top: -12px; right: -12px; width: 100%; height: 100%;
+            border: 1px solid var(--gold); opacity: 0.3; z-index: -1;
+        }
+        .about-content .lead {
+            font-family: var(--font-display); font-size: 1.3rem; font-weight: 400;
+            font-style: italic; color: var(--gold); margin-bottom: 24px; line-height: 1.5;
+        }
+        .about-content p { font-size: 1rem; color: var(--white-soft); margin-bottom: 20px; font-weight: 300; }
+        .about-stats {
+            display: flex; gap: 40px; margin-top: 40px; padding-top: 40px;
+            border-top: 1px solid var(--gray-dark);
+        }
+        .stat-item { text-align: center; }
+        .stat-number { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--gold); line-height: 1; }
+        .stat-label { font-size: 0.7rem; color: var(--gray); text-transform: uppercase; letter-spacing: 2px; margin-top: 6px; }
+
+        @media (max-width: 768px) {
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .about-image { max-width: 400px; margin: 0 auto; }
+            .about-stats { gap: 20px; flex-wrap: wrap; }
+        }
+
+        /* ============================================
+           PROXIMOS EVENTOS / ENTRADAS
+           ============================================ */
+        .eventos {
+            padding: 120px 0;
+            background: linear-gradient(180deg, var(--black) 0%, var(--black-light) 50%, var(--black) 100%);
+        }
+        .eventos-header { text-align: center; margin-bottom: 64px; }
+        .eventos-header .gold-line { margin: 0 auto 32px; }
+
+        .eventos-list { max-width: 900px; margin: 0 auto; }
+        .evento-row {
+            display: grid; grid-template-columns: 100px 1fr auto; gap: 32px;
+            align-items: center; padding: 28px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+        .evento-row:hover { background: rgba(255,255,255,0.02); padding-left: 16px; padding-right: 16px; }
+
+        .evento-date {
+            text-align: center;
+        }
+        .evento-date .day {
+            font-family: var(--font-display); font-size: 2.2rem; font-weight: 700;
+            color: var(--gold); line-height: 1;
+        }
+        .evento-date .month {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--gray); margin-top: 4px;
+        }
+        .evento-info h4 {
+            font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;
+            color: var(--white); margin-bottom: 4px;
+        }
+        .evento-info .evento-venue {
+            font-size: 0.85rem; color: var(--gray); font-weight: 300;
+        }
+        .evento-info .evento-venue i { color: var(--gold); margin-right: 6px; font-size: 0.75rem; }
+        .evento-actions { display: flex; gap: 12px; align-items: center; }
+
+        .badge-sold-out {
+            font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--red-pasado); border: 1px solid var(--red-pasado);
+            padding: 6px 14px;
+        }
+        .badge-few-left {
+            font-size: 0.6rem; font-weight: 600; letter-spacing: 1px;
+            text-transform: uppercase; color: #f5a623; margin-left: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .evento-row { grid-template-columns: 70px 1fr; gap: 16px; }
+            .evento-actions { grid-column: 1 / -1; justify-content: flex-start; margin-top: 8px; }
+        }
+
+        /* ============================================
+           SHOWS / ESPECTACULOS
+           ============================================ */
+        .shows { padding: 140px 0; }
+        .shows-header { text-align: center; margin-bottom: 48px; }
+        .shows-header .gold-line { margin: 0 auto 32px; }
+
+        .shows-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+
+        .show-card {
+            position: relative; background: var(--black-card); overflow: hidden;
+            cursor: pointer; transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .show-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), var(--shadow-gold);
+        }
+        .show-card-image {
+            aspect-ratio: 3/4; position: relative; overflow: hidden;
+        }
+        .show-card-image .img-placeholder { position: absolute; inset: 0; }
+        .show-card-image::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.3) 40%, transparent 100%);
+            z-index: 1;
+        }
+        .show-card-image .show-icon {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 3rem; opacity: 0.1; color: var(--gold); z-index: 0;
+        }
+        .show-status-badge {
+            position: absolute; top: 16px; right: 16px; z-index: 3;
+            font-size: 0.6rem; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; padding: 5px 12px; border-radius: 2px;
+        }
+        .badge-gira { background: var(--green-gira); color: var(--black); }
+        .badge-pasado { background: rgba(255,255,255,0.1); color: var(--gray); }
+
+        .show-card-content {
+            position: absolute; bottom: 0; left: 0; right: 0; padding: 32px; z-index: 3;
+        }
+        .show-tag {
+            font-size: 0.65rem; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+        }
+        .show-card h3 {
+            font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+            color: var(--white); margin-bottom: 10px; line-height: 1.3;
+        }
+        .show-card p {
+            font-size: 0.85rem; color: var(--gray); font-weight: 300;
+            margin-bottom: 16px; line-height: 1.6;
+        }
+        .show-card-buttons { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .btn-card {
+            font-size: 0.7rem; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--gold); text-decoration: none;
+            display: inline-flex; align-items: center; gap: 6px; transition: gap 0.3s;
+        }
+        .btn-card:hover { gap: 12px; }
+
+        .btn-dossier {
+            font-size: 0.6rem; font-weight: 500; letter-spacing: 1px;
+            text-transform: uppercase; color: var(--gray); text-decoration: none;
+            border: 1px solid var(--gray-dark); padding: 6px 12px;
+            display: inline-flex; align-items: center; gap: 6px; transition: all 0.3s;
+        }
+        .btn-dossier:hover { color: var(--gold); border-color: var(--gold); }
+
+        @media (max-width: 900px) {
+            .shows-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+        }
+        @media (max-width: 600px) {
+            .shows-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+        }
+
+        /* ============================================
+           REEL / ACTOR SECTION
+           ============================================ */
+        .reel { padding: 140px 0; position: relative; overflow: hidden; }
+        .reel::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(212, 168, 83, 0.04) 0%, transparent 60%),
+                linear-gradient(90deg, var(--black) 0%, var(--black-light) 50%, var(--black) 100%);
+        }
+        .reel .container { position: relative; z-index: 1; }
+        .reel-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+
+        .reel-video {
+            position: relative; aspect-ratio: 16/9; background: var(--black-card);
+            border: 1px solid var(--gray-dark); overflow: hidden; cursor: pointer;
+        }
+        .play-button {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80px; height: 80px; border-radius: 50%;
+            background: rgba(212, 168, 83, 0.9);
+            display: flex; align-items: center; justify-content: center;
+            transition: all var(--transition); z-index: 2;
+        }
+        .play-button::before {
+            content: ''; position: absolute; inset: -8px; border-radius: 50%;
+            border: 1px solid rgba(212, 168, 83, 0.3); animation: playPulse 2s infinite;
+        }
+        @keyframes playPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.5; } }
+        .play-button svg { width: 28px; height: 28px; fill: var(--black); margin-left: 4px; }
+        .reel-video:hover .play-button { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 60px rgba(212, 168, 83, 0.4); }
+
+        .reel-filmography { margin-top: 32px; }
+        .film-item {
+            display: flex; gap: 16px; align-items: center; padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .film-year {
+            font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+            color: var(--gold); min-width: 50px;
+        }
+        .film-title { font-weight: 500; color: var(--white); font-size: 0.95rem; }
+        .film-role { font-size: 0.8rem; color: var(--gray); font-weight: 300; margin-left: auto; }
+
+        .reel-content p { font-size: 1rem; font-weight: 300; color: var(--white-soft); margin-bottom: 20px; }
+
+        @media (max-width: 768px) { .reel-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+        /* ============================================
+           CORPORATE SECTION
+           ============================================ */
+        .corporate { padding: 140px 0; background: linear-gradient(180deg, var(--black) 0%, #0c0c0c 50%, var(--black) 100%); }
+        .corporate-header { text-align: center; margin-bottom: 72px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .corporate-header .gold-line { margin: 0 auto 32px; }
+        .corporate-header p { font-size: 1rem; color: var(--gray); font-weight: 300; }
+
+        .corporate-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 64px; }
+        .corp-card {
+            background: var(--black-card); border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 48px 32px; text-align: center; transition: all var(--transition);
+            position: relative; overflow: hidden;
+        }
+        .corp-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0; transition: opacity var(--transition);
+        }
+        .corp-card:hover { border-color: rgba(212, 168, 83, 0.2); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); }
+        .corp-card:hover::before { opacity: 1; }
+        .corp-icon {
+            width: 56px; height: 56px; margin: 0 auto 24px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); font-size: 1.6rem;
+            border: 1px solid rgba(212, 168, 83, 0.2); border-radius: 50%;
+            transition: all var(--transition);
+        }
+        .corp-card:hover .corp-icon { background: rgba(212, 168, 83, 0.1); border-color: var(--gold); }
+        .corp-card h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+        .corp-card p { font-size: 0.85rem; color: var(--gray); font-weight: 300; line-height: 1.6; }
+        .corporate-cta { text-align: center; }
+
+        @media (max-width: 900px) { .corporate-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 500px) { .corporate-grid { grid-template-columns: 1fr; } }
+
+        /* ============================================
+           LIBROS / MARKETPLACE
+           ============================================ */
+        .marketplace {
+            padding: 120px 0;
+        }
+        .marketplace-header { text-align: center; margin-bottom: 64px; }
+        .marketplace-header .gold-line { margin: 0 auto 32px; }
+
+        .marketplace-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+            max-width: 1000px; margin: 0 auto;
+        }
+        .market-card {
+            background: var(--black-card); border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden; transition: all var(--transition); text-align: center;
+        }
+        .market-card:hover { transform: translateY(-6px); border-color: rgba(212,168,83,0.2); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+        .market-card-image { aspect-ratio: 3/4; position: relative; overflow: hidden; }
+        .market-card-body { padding: 28px 24px; }
+        .market-card-body h4 {
+            font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+            color: var(--white); margin-bottom: 8px;
+        }
+        .market-card-body .price {
+            font-size: 1.2rem; font-weight: 700; color: var(--gold); margin-bottom: 16px;
+        }
+        .market-card-body p { font-size: 0.85rem; color: var(--gray); font-weight: 300; margin-bottom: 20px; }
+
+        @media (max-width: 700px) { .marketplace-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .marketplace-grid { grid-template-columns: 1fr; max-width: 320px; } }
+
+        /* ============================================
+           TESTIMONIALS
+           ============================================ */
+        .testimonials { padding: 140px 0; }
+        .testimonials-header { text-align: center; margin-bottom: 72px; }
+        .testimonials-header .gold-line { margin: 0 auto 32px; }
+
+        .testimonials-slider { position: relative; max-width: 900px; margin: 0 auto; overflow: hidden; }
+        .testimonials-track { display: flex; transition: transform 0.6s ease; }
+        .testimonial-slide { min-width: 100%; padding: 0 24px; }
+        .testimonial-card {
+            text-align: center; padding: 60px 48px;
+            background: var(--black-card); border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+        .testimonial-quote-icon {
+            font-family: var(--font-display); font-size: 6rem;
+            color: var(--gold); opacity: 0.15; line-height: 1;
+            position: absolute; top: 20px; left: 40px;
+        }
+        .testimonial-text {
+            font-family: var(--font-display); font-size: 1.2rem; font-style: italic;
+            color: var(--white); line-height: 1.7; margin-bottom: 32px; position: relative;
+        }
+        .testimonial-author { font-size: 0.9rem; font-weight: 600; color: var(--gold); margin-bottom: 4px; }
+        .testimonial-role { font-size: 0.8rem; color: var(--gray); font-weight: 300; }
+
+        .testimonials-nav { display: flex; justify-content: center; gap: 12px; margin-top: 40px; }
+        .testimonials-nav button {
+            width: 12px; height: 12px; border-radius: 50%;
+            border: 1px solid var(--gray-dark); background: transparent;
+            cursor: pointer; transition: all 0.3s; padding: 0;
+        }
+        .testimonials-nav button.active { background: var(--gold); border-color: var(--gold); }
+        .testimonials-arrows { display: flex; justify-content: center; gap: 16px; margin-top: 24px; }
+        .testimonials-arrows button {
+            width: 48px; height: 48px; border: 1px solid var(--gray-dark);
+            background: transparent; color: var(--white); cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; font-size: 1.1rem;
+        }
+        .testimonials-arrows button:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* ============================================
+           PRESS / LOGOS
+           ============================================ */
+        .press {
+            padding: 80px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .press-label { text-align: center; font-size: 0.75rem; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: var(--gray); margin-bottom: 48px; }
+        .press-logos { display: flex; justify-content: center; align-items: center; gap: 60px; flex-wrap: wrap; }
+        .press-logo {
+            font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+            color: var(--gray-dark); letter-spacing: 3px; text-transform: uppercase;
+            opacity: 0.5; transition: opacity var(--transition), color var(--transition);
+            white-space: nowrap;
+        }
+        .press-logo:hover { opacity: 1; color: var(--gold); }
+        @media (max-width: 600px) { .press-logos { gap: 32px; } .press-logo { font-size: 0.9rem; } }
+
+        /* ============================================
+           BRANDS / MARCAS QUE CONFÍAN
+           ============================================ */
+        .brands {
+            padding: 120px 0;
+            background: linear-gradient(180deg, var(--black) 0%, #0e0e0e 50%, var(--black) 100%);
+        }
+        .brands-header { text-align: center; margin-bottom: 64px; }
+        .brands-header .gold-line { margin: 0 auto 32px; }
+        .brands-header p { font-size: 1rem; color: var(--gray); font-weight: 300; max-width: 600px; margin: 0 auto; }
+
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 48px;
+        }
+        .brand-cell {
+            background: var(--black);
+            display: flex; align-items: center; justify-content: center;
+            padding: 36px 20px; min-height: 110px;
+            transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .brand-cell::before {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(212, 168, 83, 0.04);
+            opacity: 0; transition: opacity 0.4s;
+        }
+        .brand-cell:hover::before { opacity: 1; }
+        .brand-cell:hover { z-index: 1; }
+        .brand-cell:hover .brand-name { opacity: 1; color: var(--gold); }
+        .brand-cell:hover img { opacity: 1; filter: none; }
+
+        .brand-name {
+            font-family: var(--font-body); font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase; color: var(--gray);
+            opacity: 0.5; transition: all 0.4s; text-align: center;
+            line-height: 1.4; position: relative; z-index: 1;
+        }
+        .brand-cell img {
+            max-width: 80%; object-fit: contain; transition: all 0.4s;
+        }
+        /* Variation: bigger brands get display font */
+        .brand-name.display {
+            font-family: var(--font-display); font-size: 0.95rem;
+            letter-spacing: 1px; font-weight: 700;
+        }
+        .brand-name .brand-icon {
+            display: block; font-size: 1.4rem; margin-bottom: 8px; color: var(--gray-dark);
+            transition: color 0.4s;
+        }
+        .brand-cell:hover .brand-icon { color: var(--gold); }
+
+        /* Category labels above grid */
+        .brands-category {
+            font-size: 0.65rem; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--gold); opacity: 0.6;
+            margin-bottom: 20px; text-align: center;
+        }
+
+        /* Two-column layout for brand categories */
+        .brands-sections { display: flex; flex-direction: column; gap: 48px; }
+
+        @media (max-width: 900px) {
+            .brands-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .brands-grid { grid-template-columns: repeat(3, 1fr); }
+            .brand-cell { padding: 24px 12px; min-height: 90px; }
+            .brand-name { font-size: 0.6rem; letter-spacing: 1px; }
+            .brand-name.display { font-size: 0.75rem; }
+        }
+        @media (max-width: 400px) {
+            .brands-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* ============================================
+           FINAL CTA
+           ============================================ */
+        .final-cta { padding: 160px 0; text-align: center; position: relative; overflow: hidden; }
+        .final-cta::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(212, 168, 83, 0.06) 0%, transparent 60%),
+                linear-gradient(180deg, var(--black) 0%, #0d0d0d 50%, var(--black) 100%);
+        }
+        .final-cta .container { position: relative; z-index: 1; }
+        .final-cta-title {
+            font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700; color: var(--white); margin-bottom: 20px; line-height: 1.2;
+        }
+        .final-cta-text { font-size: 1.1rem; color: var(--gray); font-weight: 300; max-width: 600px; margin: 0 auto 48px; }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer { padding: 80px 0 40px; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 64px; }
+        .footer-brand .navbar-logo { display: inline-block; margin-bottom: 20px; font-size: 1.2rem; }
+        .footer-brand p { font-size: 0.9rem; color: var(--gray); font-weight: 300; line-height: 1.7; margin-bottom: 24px; }
+        .footer-social { display: flex; gap: 16px; }
+        .footer-social a {
+            width: 40px; height: 40px; border: 1px solid var(--gray-dark);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--white-soft); font-size: 0.9rem; text-decoration: none; transition: all 0.3s;
+        }
+        .footer-social a:hover { border-color: var(--gold); color: var(--gold); background: rgba(212, 168, 83, 0.1); }
+        .footer-col h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 24px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul a { font-size: 0.85rem; color: var(--gray); text-decoration: none; font-weight: 300; transition: color 0.3s; }
+        .footer-col ul a:hover { color: var(--gold); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 32px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+        }
+        .footer-bottom p { font-size: 0.8rem; color: var(--gray-dark); font-weight: 300; }
+        .footer-bottom .gold { color: var(--gold); }
+
+        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+
+        /* Responsive: Gracias banner stacks on mobile */
+        @media (max-width: 768px) {
+            .gracias-banner { grid-template-columns: 1fr !important; gap: 0 !important; text-align: center; }
+            .gracias-poster { width: 100% !important; max-height: 320px; aspect-ratio: 16/9 !important; }
+            .gracias-banner > div:last-child { padding: 32px 24px !important; }
+        }
+        @media (max-width: 500px) { .footer-grid { grid-template-columns: 1fr; } .footer-bottom { justify-content: center; text-align: center; } }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE LOADER -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-name">Aarón Gómez</div>
+        <div class="loader-bar"></div>
+    </div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- ============ NAVBAR ============ -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="navbar-logo">Aarón <span>Gómez</span></a>
+            <ul class="navbar-menu">
+                <li><a href="#nuevo-show">Gracias</a></li>
+                <li><a href="#sobre">Sobre Aarón</a></li>
+                <li><a href="#eventos">Próximos Eventos</a></li>
+                <li><a href="#espectaculos">Espectáculos</a></li>
+                <li><a href="#reel">Actor</a></li>
+                <li><a href="#corporativo">Corporativo</a></li>
+                <li><a href="#marcas">Marcas</a></li>
+                <li><a href="#tienda">Tienda</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay">
+        <ul class="mobile-menu">
+            <li><a href="#nuevo-show" class="mobile-link">Gracias</a></li>
+            <li><a href="#sobre" class="mobile-link">Sobre Aarón</a></li>
+            <li><a href="#eventos" class="mobile-link">Próximos Eventos</a></li>
+            <li><a href="#espectaculos" class="mobile-link">Espectáculos</a></li>
+            <li><a href="#reel" class="mobile-link">Actor</a></li>
+            <li><a href="#corporativo" class="mobile-link">Corporativo</a></li>
+            <li><a href="#marcas" class="mobile-link">Marcas</a></li>
+            <li><a href="#tienda" class="mobile-link">Tienda</a></li>
+            <li><a href="#contacto" class="mobile-link">Contacto</a></li>
+        </ul>
+    </div>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-particles" id="heroParticles"></div>
+        <!--
+            FOTO HERO: Usar la foto del jersey cuello alto burdeos (retrato dramático)
+            como background-image a pantalla completa con overlay oscuro
+        -->
+        <div class="hero-content">
+            <p class="hero-pretitle">Bienvenido al universo de</p>
+            <h1 class="hero-title">AARÓN<br><span class="gold">GÓMEZ</span></h1>
+            <p class="hero-subtitle">
+                Humorista <span class="sep">·</span>
+                Actor <span class="sep">·</span>
+                Presentador
+            </p>
+            <div class="hero-ctas">
+                <a href="#nuevo-show" class="btn-primary"><span>Nuevo Show: Gracias</span></a>
+                <a href="#contacto" class="btn-secondary">Contrata a Aarón</a>
+            </div>
+        </div>
+        <div class="scroll-indicator"><div class="mouse"></div><span>Scroll</span></div>
+    </section>
+
+    <!-- ============ NUEVO SHOW — GRACIAS ============ -->
+    <section class="nuevo-show" id="nuevo-show">
+        <div class="container">
+            <div class="nuevo-show-grid">
+                <div class="nuevo-show-poster reveal-left">
+                    <div class="nuevo-show-badge">Estreno 2026</div>
+                    <img src="img/gracias-banner.jpg" alt="GRACIAS - Nuevo show de Aarón Gómez" style="width:100%;height:100%;object-fit:cover;">
+                </div>
+                <div class="nuevo-show-content reveal-right">
+                    <p class="estreno-date"><i class="fa-solid fa-calendar-star"></i> Estreno — Octubre 2026</p>
+                    <h2>GRACIAS</h2>
+                    <p class="show-by">Un nuevo show descabellado de Aarón Gómez</p>
+                    <blockquote>"Seis años después, estreno. No porque me haya ido lejos, sino porque me quedé pensando... quizá demasiado. Vuelvo para hacer las gracias y, de paso, agradecerles."</blockquote>
+                    <p>El monólogo, la improvisación, el lenguaje gestual y los elementos musicales se integran dentro de una estructura dramatúrgica que mantiene la cercanía y frescura del directo. Cada función es un evento único.</p>
+                    <div class="nuevo-show-meta">
+                        <div class="meta-item">
+                            <div class="meta-val">80'</div>
+                            <div class="meta-label">Duración</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-val">+16</div>
+                            <div class="meta-label">Edad</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-val">Oct '26</div>
+                            <div class="meta-label">Estreno</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-val">1</div>
+                            <div class="meta-label">Artista</div>
+                        </div>
+                    </div>
+                    <div class="nuevo-show-ctas">
+                        <a href="#espectaculos" class="btn-primary"><span><i class="fa-solid fa-circle-info"></i> Ampliar información del espectáculo</span></a>
+                        <a href="#eventos" class="btn-coral"><i class="fa-solid fa-ticket"></i> Comprar entradas</a>
+                        <a href="#" class="btn-dossier"><i class="fa-solid fa-file-pdf"></i> Descargar dossier</a>
+                        <a href="#" class="btn-dossier"><i class="fa-solid fa-list-check"></i> Requisitos técnicos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="about" id="sobre">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image reveal-left">
+                    <img src="img/aaron-portrait.png" alt="Aarón Gómez - Retrato" style="width:100%;height:100%;object-fit:cover;aspect-ratio:3/4;">
+                    <div class="about-image-frame"></div>
+                </div>
+                <div class="about-content reveal-right">
+                    <span class="section-label">Sobre Aarón</span>
+                    <h2 class="section-title">El arte de hacer reír, emocionar y conectar</h2>
+                    <div class="gold-line"></div>
+                    <p class="lead">"Caí en aquello del teatro a los 16 años... con más ganas que estilo."</p>
+                    <p>Aarón Gómez Rosales nació en Santa Cruz de Tenerife en 1981. A los 16 años entró en la compañía Teatro13, dirigida por su hermano Abraham Gómez. Con 18 la tomó al mando, escribiendo y actuando a partes iguales. Premios individuales y grupales en festivales de teatro amateur le abrieron las puertas de los cafés-teatro, donde fue puliendo su comedia: primero en grupo, luego en dúos, hasta encontrar su verdadera voz como one-man-show.</p>
+                    <p>Desde entonces, su carrera ha evolucionado en múltiples direcciones. En <strong>cine</strong>, ha participado en largometrajes como <em>Trinidad</em>, <em>Odio el Verano</em>, <em>Coartadas</em>, <em>Mambo</em> y <em>Fogueo</em>, y actualmente rueda <em>Me entiendes o te lo explico</em> y <em>Desde Arriba</em>. En <strong>televisión</strong>, ha presentado <em>Una Mala Noche la tiene cualquiera</em>, <em>Sota, Caballo y Rey</em>, <em>Esto no es una serie</em> y <em>El Programa con Aarón Gómez</em>. En <strong>eventos corporativos</strong>, marcas como Philip Morris, MediaMarkt, Dorada, IQOS, el Gobierno de Canarias o la D.O. Tacoronte Acentejo confían en él como presentador y embajador.</p>
+                    <p>Además, es <strong>escritor</strong>: su libro <em>La Digestión del Mundo</em> (MueveTuLengua, 2019) mostró su faceta más literaria, y cada semana firma una columna de opinión en el <strong>Diario de Avisos</strong>. Con más de 255.000 seguidores en redes sociales, Aarón es una de las figuras más polifacéticas del panorama artístico canario.</p>
+                    <div class="about-stats">
+                        <div class="stat-item reveal delay-1">
+                            <div class="stat-number">255K+</div>
+                            <div class="stat-label">Seguidores</div>
+                        </div>
+                        <div class="stat-item reveal delay-2">
+                            <div class="stat-number">96K</div>
+                            <div class="stat-label">Instagram</div>
+                        </div>
+                        <div class="stat-item reveal delay-3">
+                            <div class="stat-number">111K</div>
+                            <div class="stat-label">Facebook</div>
+                        </div>
+                        <div class="stat-item reveal delay-4">
+                            <div class="stat-number">35K</div>
+                            <div class="stat-label">X (Twitter)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PROXIMOS EVENTOS / ENTRADAS ============ -->
+    <!--
+        =============================================
+        PARA ACTUALIZAR EVENTOS:
+        1. Copia un bloque <div class="evento-row"> existente
+        2. Cambia: día, mes, título, venue, y enlace de entradas
+        3. Para marcar "Agotado": sustituye el btn-coral por <span class="badge-sold-out">Agotado</span>
+        4. Para "Últimas plazas": añade <span class="badge-few-left"><i class="fa-solid fa-fire"></i> Últimas plazas</span>
+        5. Para quitar un evento pasado: elimina su bloque <div class="evento-row">
+        =============================================
+    -->
+    <section class="eventos" id="eventos">
+        <div class="container">
+            <div class="eventos-header reveal">
+                <span class="section-label">Agenda</span>
+                <h2 class="section-title">Próximos Eventos</h2>
+                <div class="gold-line"></div>
+                <p style="font-size:0.95rem;color:var(--gray);font-weight:300;max-width:650px;margin:0 auto;">Entradas disponibles en <a href="https://www.reislas.com" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:600;">reislas.com</a> — Precios desde 16€</p>
+            </div>
+            <div class="eventos-list">
+                <!-- EVENTO 1 — Festival Reislas: Lanzarote (estreno) -->
+                <div class="evento-row reveal delay-1">
+                    <div class="evento-date">
+                        <div class="day">15</div>
+                        <div class="month">Oct 2026</div>
+                    </div>
+                    <div class="evento-info">
+                        <h4>GRACIAS — Estreno Absoluto <span style="font-size:0.6rem;background:var(--coral);color:#fff;padding:3px 8px;margin-left:8px;letter-spacing:1px;text-transform:uppercase;font-weight:700;vertical-align:middle;">Estreno</span></h4>
+                        <p class="evento-venue"><i class="fa-solid fa-location-dot"></i>Recinto Escénico de San Bartolomé, Lanzarote</p>
+                        <p class="evento-venue" style="margin-top:4px;"><i class="fa-solid fa-masks-theater" style="color:var(--gold);margin-right:6px;font-size:0.75rem;"></i><em>Festival de Humor Reíslas — 4ª Edición</em></p>
+                    </div>
+                    <div class="evento-actions">
+                        <a href="https://www.reislas.com" target="_blank" class="btn-coral"><i class="fa-solid fa-ticket"></i> Comprar entradas</a>
+                    </div>
+                </div>
+                <!-- EVENTO 2 — Festival Reislas: Fecha por confirmar isla 2 -->
+                <div class="evento-row reveal delay-2">
+                    <div class="evento-date">
+                        <div class="day">--</div>
+                        <div class="month">Oct 2026</div>
+                    </div>
+                    <div class="evento-info">
+                        <h4>GRACIAS</h4>
+                        <p class="evento-venue"><i class="fa-solid fa-location-dot"></i>Fecha y sede por confirmar</p>
+                        <p class="evento-venue" style="margin-top:4px;"><i class="fa-solid fa-masks-theater" style="color:var(--gold);margin-right:6px;font-size:0.75rem;"></i><em>Festival de Humor Reíslas — 4ª Edición</em></p>
+                    </div>
+                    <div class="evento-actions">
+                        <span style="font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:6px 14px;">Próximamente</span>
+                    </div>
+                </div>
+                <!-- EVENTO 3 — Festival Reislas: Fecha por confirmar isla 3 -->
+                <div class="evento-row reveal delay-3">
+                    <div class="evento-date">
+                        <div class="day">--</div>
+                        <div class="month">Oct 2026</div>
+                    </div>
+                    <div class="evento-info">
+                        <h4>GRACIAS</h4>
+                        <p class="evento-venue"><i class="fa-solid fa-location-dot"></i>Fecha y sede por confirmar</p>
+                        <p class="evento-venue" style="margin-top:4px;"><i class="fa-solid fa-masks-theater" style="color:var(--gold);margin-right:6px;font-size:0.75rem;"></i><em>Festival de Humor Reíslas — 4ª Edición</em></p>
+                    </div>
+                    <div class="evento-actions">
+                        <span style="font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:6px 14px;">Próximamente</span>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align:center;margin-top:40px;font-size:0.8rem;color:var(--gray-dark);font-weight:300;"><i class="fa-solid fa-circle-info" style="margin-right:6px;color:var(--gold);"></i>¿Quieres llevar a Aarón a tu teatro, festival o evento? <a href="#contacto" style="color:var(--gold);text-decoration:none;font-weight:600;">Contacta con su equipo</a></p>
+        </div>
+    </section>
+
+    <!-- ============ ESPECTÁCULO EN GIRA ============ -->
+    <section class="shows" id="espectaculos" style="padding:100px 0;">
+        <div class="container">
+            <div class="shows-header reveal" style="margin-bottom:48px;">
+                <span class="section-label"><i class="fa-solid fa-circle" style="font-size:6px;color:var(--green-gira);vertical-align:middle;margin-right:6px;animation:playPulse 2s infinite;"></i> Actualmente en gira</span>
+                <h2 class="section-title">Espectáculo</h2>
+                <div class="gold-line"></div>
+            </div>
+
+            <!-- GRACIAS — Layout horizontal / banner -->
+            <div class="reveal gracias-banner" style="display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;background:var(--black-card);border:1px solid rgba(255,255,255,0.05);overflow:hidden;">
+                <div class="gracias-poster" style="width:320px;aspect-ratio:1/1;position:relative;overflow:hidden;">
+                    <img src="img/gracias-poster.jpg" alt="GRACIAS - Cartel" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                    <span class="show-status-badge badge-gira" style="position:absolute;top:16px;left:16px;z-index:2;"><i class="fa-solid fa-circle" style="font-size:6px;margin-right:4px;vertical-align:middle;"></i> En gira</span>
+                </div>
+                <div style="padding:40px 48px 40px 0;">
+                    <div class="show-tag" style="margin-bottom:12px;">Nuevo — Estreno Octubre 2026</div>
+                    <h3 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--white);margin-bottom:12px;line-height:1;">GRACIAS</h3>
+                    <p style="font-size:0.85rem;color:var(--gray);font-weight:300;font-style:italic;margin-bottom:16px;">Un nuevo show descabellado de Aarón Gómez</p>
+                    <p style="font-size:0.95rem;color:var(--white-soft);font-weight:300;margin-bottom:8px;line-height:1.7;">Tras seis años sin estrenar, Aarón vuelve con un espectáculo donde el monólogo, la improvisación, el lenguaje gestual y la música se funden en 80 minutos de conexión directa con el público. Cada función es única e irrepetible.</p>
+                    <p style="font-size:0.8rem;color:var(--gray);margin-bottom:24px;"><strong style="color:var(--white);">Duración:</strong> 80 min &nbsp;|&nbsp; <strong style="color:var(--white);">Estreno:</strong> 15 Oct 2026, Festival Reíslas (Lanzarote)</p>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+                        <a href="#eventos" class="btn-coral"><i class="fa-solid fa-ticket"></i> Comprar entradas</a>
+                        <a href="#" class="btn-dossier"><i class="fa-solid fa-file-pdf"></i> Descargar dossier</a>
+                        <a href="#" class="btn-dossier"><i class="fa-solid fa-list-check"></i> Requisitos técnicos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CINE & TELEVISIÓN ============ -->
+    <section class="reel" id="reel">
+        <div class="container">
+            <!-- Videobook + intro -->
+            <div class="reel-grid">
+                <div class="reel-video reveal-left">
+                    <img src="img/hero-bg.jpg" alt="Aarón Gómez - Actor" style="width:100%;height:100%;object-fit:cover;">
+                    <div class="play-button">
+                        <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
+                    </div>
+                </div>
+                <div class="reel-content reveal-right">
+                    <span class="section-label">Cine & Televisión</span>
+                    <h2 class="section-title">Delante de la cámara, en su elemento</h2>
+                    <div class="gold-line"></div>
+                    <p>Aarón no solo domina el escenario en vivo: su presencia frente a la cámara es igual de magnética. Con participaciones en largometrajes, series y programas de televisión propios, ha demostrado una versatilidad actoral que pocos artistas poseen.</p>
+                </div>
+            </div>
+
+            <!-- Filmografía dividida: CINE y TV -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:64px;" class="reveal">
+                <!-- CINE -->
+                <div>
+                    <h3 style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                        <i class="fa-solid fa-film" style="color:var(--gold);font-size:1rem;"></i> Cine
+                    </h3>
+                    <div style="width:40px;height:1px;background:var(--gold);margin-bottom:20px;opacity:0.5;"></div>
+                    <div class="reel-filmography">
+                        <div class="film-item">
+                            <span class="film-year" style="color:var(--coral);">2026</span>
+                            <span class="film-title">Me entiendes o te lo explico</span>
+                            <span class="film-role" style="color:var(--coral);font-style:italic;">Rodando</span>
+                        </div>
+                        <div class="film-item">
+                            <span class="film-year" style="color:var(--coral);">2026</span>
+                            <span class="film-title">Desde Arriba</span>
+                            <span class="film-role" style="color:var(--coral);font-style:italic;">Rodando</span>
+                        </div>
+                        <div class="film-item">
+                            <span class="film-year">2025</span>
+                            <span class="film-title">Trinidad</span>
+                            <span class="film-role">Western — Dir. Ortuño & Alvea</span>
+                        </div>
+                        <div class="film-item">
+                            <span class="film-year">2024</span>
+                            <span class="film-title">Odio el Verano</span>
+                            <span class="film-role">Dir. Fer García-Ruiz</span>
+                        </div>
+                        <div class="film-item">
+                            <span class="film-year">2024</span>
+                            <span class="film-title">Coartadas</span>
+                            <span class="film-role">Actor</span>
+                        </div>
+                        <div class="film-item">
+                            <span class="film-year">2023</span>
+                            <span class="film-title">Mambo</span>
+                            <span class="film-role">Serie — RTVE</span>
+                        </div>
+                        <div class="film-item">
+                            <span class="film-year">2020</span>
+                            <span class="film-title">Fogueo</span>
+                            <span class="film-role">Dir. David Sainz</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- TELEVISIÓN -->
+                <div>
+                    <h3 style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                        <i class="fa-solid fa-tv" style="color:var(--gold);font-size:1rem;"></i> Televisión
+                    </h3>
+                    <div style="width:40px;height:1px;background:var(--gold);margin-bottom:20px;opacity:0.5;"></div>
+                    <div class="reel-filmography">
+                        <div class="film-item">
+                            <span class="film-year">2024</span>
+                            <span class="film-title">Una Mala Noche la tiene cualquiera</span>
+                            <span class="film-role">Presentador — TV Canaria</span>
+                        </div>
+                        <div class="film-item">
+                            <span class="film-year">2022</span>
+                            <span class="film-title">Sota, Caballo y Rey</span>
+                            <span class="film-role">Presentador — TV Canaria</span>
+                        </div>
+                        <div class="film-item">
+                            <span class="film-year">2019</span>
+                            <span class="film-title">Esto no es una serie</span>
+                            <span class="film-role">Presentador — Vodafone</span>
+                        </div>
+                        <div class="film-item">
+                            <span class="film-year">2018</span>
+                            <span class="film-title">El Programa con Aarón Gómez</span>
+                            <span class="film-role">Presentador — TV</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ COLUMNA DIARIO DE AVISOS ============ -->
+    <section style="padding:80px 0;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);" id="columna">
+        <div class="container">
+            <div style="display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;max-width:900px;margin:0 auto;" class="reveal">
+                <div style="text-align:center;">
+                    <i class="fa-solid fa-pen-fancy" style="font-size:2.5rem;color:var(--gold);margin-bottom:16px;display:block;"></i>
+                    <div style="font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--white);line-height:1.2;">Diario<br>de Avisos</div>
+                    <div style="font-size:0.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:2px;margin-top:8px;">Columna semanal</div>
+                </div>
+                <div>
+                    <span class="section-label">Aarón escribe</span>
+                    <h3 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:12px;">Cada semana, una nueva mirada</h3>
+                    <p style="font-size:0.95rem;color:var(--white-soft);font-weight:300;margin-bottom:20px;line-height:1.7;">Más allá del escenario, Aarón reflexiona, protesta y digiere el mundo a través de su columna semanal en el Diario de Avisos. Humor, prosa poética y una mirada personal sobre la vida, las islas y todo lo que nos pasa.</p>
+                    <a href="https://diariodeavisos.elespanol.com" target="_blank" class="btn-outline-sm"><i class="fa-solid fa-newspaper"></i> Leer última columna</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CORPORATIVO ============ -->
+    <section class="corporate" id="corporativo">
+        <div class="container">
+            <div class="corporate-header reveal">
+                <span class="section-label">Servicios Corporativos</span>
+                <h2 class="section-title">Eleva tu evento al siguiente nivel</h2>
+                <div class="gold-line"></div>
+                <p>Las empresas más exigentes confían en Aarón Gómez para dar vida a sus eventos. Marcas como Dorada, Media Markt, IQOS, el Gobierno de Canarias y la D.O. Tacoronte Acentejo ya lo han hecho.</p>
+            </div>
+            <div class="corporate-grid">
+                <div class="corp-card reveal delay-1">
+                    <div class="corp-icon"><i class="fa-solid fa-award"></i></div>
+                    <h3>Presentador de Galas</h3>
+                    <p>Conduce ceremonias de premios, galas benéficas y eventos de alto perfil con elegancia, ritmo y el toque justo de humor.</p>
+                </div>
+                <div class="corp-card reveal delay-2">
+                    <div class="corp-icon"><i class="fa-solid fa-microphone"></i></div>
+                    <h3>Master of Ceremonies</h3>
+                    <p>Guía la narrativa de tu evento, conecta ponentes y mantiene a la audiencia enganchada de principio a fin.</p>
+                </div>
+                <div class="corp-card reveal delay-3">
+                    <div class="corp-icon"><i class="fa-solid fa-users"></i></div>
+                    <h3>Team Building</h3>
+                    <p>Dinámicas creativas y sesiones de humor que fortalecen equipos, rompen barreras y generan colaboración real.</p>
+                </div>
+                <div class="corp-card reveal delay-4">
+                    <div class="corp-icon"><i class="fa-solid fa-champagne-glasses"></i></div>
+                    <h3>Eventos Corporativos</h3>
+                    <p>Desde convenciones hasta lanzamientos de producto. Aarón adapta su registro para potenciar el mensaje de tu marca.</p>
+                </div>
+            </div>
+            <div class="corporate-cta reveal">
+                <a href="#contacto" class="btn-primary"><span>Solicita presupuesto sin compromiso</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ TIENDA / MARKETPLACE ============ -->
+    <section class="marketplace" id="tienda">
+        <div class="container">
+            <div class="marketplace-header reveal">
+                <span class="section-label">Tienda</span>
+                <h2 class="section-title">Libros, merch y más</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="marketplace-grid">
+                <!-- LIBRO 1: La Digestión del Mundo (REAL) -->
+                <div class="market-card reveal delay-1">
+                    <div class="market-card-image">
+                        <img src="img/libro-digestion-mundo.jpg" alt="La Digestión del Mundo - Aarón Gómez" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                    <div class="market-card-body">
+                        <h4>La Digestión del Mundo</h4>
+                        <p class="price">Editorial MueveTuLengua · 2019</p>
+                        <p>120 páginas de prosa poética donde Aarón desnuda su mirada sobre la vida, Canarias y el ser humano. Un libro íntimo, valiente y sin filtros.</p>
+                        <a href="https://www.amazon.es/dp/8417938001" target="_blank" class="btn-outline-sm"><i class="fa-brands fa-amazon"></i> Comprar en Amazon</a>
+                    </div>
+                </div>
+                <!-- LIBRO 2: Próximamente -->
+                <div class="market-card reveal delay-2">
+                    <div class="market-card-image">
+                        <div class="img-placeholder" style="background: linear-gradient(135deg, #1a1a1a 0%, #1f1f1f 50%, #1a1a1a 100%);">
+                            <div class="photo-label"><i class="fa-solid fa-lock"></i><br>Próximamente<br><small>2026</small></div>
+                        </div>
+                    </div>
+                    <div class="market-card-body">
+                        <h4>Nuevo libro <span style="color:var(--gold);">· Próximamente</span></h4>
+                        <p class="price">Fecha por confirmar</p>
+                        <p>Aarón prepara su segunda obra literaria. Suscríbete para ser el primero en enterarte cuando se anuncie.</p>
+                        <a href="#contacto" class="btn-outline-sm"><i class="fa-solid fa-bell"></i> Avisarme</a>
+                    </div>
+                </div>
+                <!-- MERCH / PLACEHOLDER -->
+                <div class="market-card reveal delay-3">
+                    <div class="market-card-image">
+                        <div class="img-placeholder">
+                            <div class="photo-label"><i class="fa-solid fa-shirt"></i><br>Merch Oficial</div>
+                        </div>
+                    </div>
+                    <div class="market-card-body">
+                        <h4>Merch Oficial</h4>
+                        <p class="price">Desde 19,95 &euro;</p>
+                        <p>Camisetas, tazas y accesorios con el sello Aarón Gómez. Ediciones limitadas disponibles tras cada estreno.</p>
+                        <a href="#" class="btn-outline-sm"><i class="fa-solid fa-cart-shopping"></i> Ver tienda</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section class="testimonials" id="testimonios">
+        <div class="container">
+            <div class="testimonials-header reveal">
+                <span class="section-label">Testimonios</span>
+                <h2 class="section-title">Lo que dicen quienes han confiado en Aarón</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="testimonials-slider reveal">
+                <div class="testimonials-track" id="testimonialsTrack">
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote-icon">"</div>
+                            <p class="testimonial-text">Contratar a Aarón para nuestra gala anual fue la mejor decisión que pudimos tomar. No solo condujo el evento con una profesionalidad impecable, sino que consiguió que 800 personas se sintieran como en casa. Al día siguiente, solo recibimos felicitaciones.</p>
+                            <p class="testimonial-author">María del Carmen Suárez</p>
+                            <p class="testimonial-role">Directora de Comunicación — Grupo Atlántico Empresarial</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote-icon">"</div>
+                            <p class="testimonial-text">Hemos trabajado con muchos presentadores a lo largo de los años, pero Aarón tiene algo especial: entiende el mensaje corporativo, lo respeta y lo hace brillar con su personalidad. Nuestro equipo directivo quedó absolutamente encantado.</p>
+                            <p class="testimonial-author">Roberto Méndez Hernández</p>
+                            <p class="testimonial-role">CEO — Innova Canarias Tech</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote-icon">"</div>
+                            <p class="testimonial-text">Le pedimos un show de team building para 150 personas de 12 nacionalidades distintas. Aarón logró que todo el mundo riera, participara y se fuera con la sensación de pertenecer a algo más grande. Extraordinario.</p>
+                            <p class="testimonial-author">Elena Vogt</p>
+                            <p class="testimonial-role">HR Director — Mediterranean Hotels & Resorts</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonials-nav" id="testimonialsNav">
+                    <button class="active" data-index="0"></button>
+                    <button data-index="1"></button>
+                    <button data-index="2"></button>
+                </div>
+                <div class="testimonials-arrows">
+                    <button id="prevTestimonial"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button id="nextTestimonial"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ MARCAS QUE CONFÍAN EN AARÓN ============ -->
+    <section class="brands" id="marcas">
+        <div class="container">
+            <div class="brands-header reveal">
+                <span class="section-label">Colaboraciones</span>
+                <h2 class="section-title">Marcas que confían en Aarón</h2>
+                <div class="gold-line"></div>
+                <p>Empresas e instituciones de primer nivel que han elegido a Aarón Gómez como embajador, presentador o cara de sus campañas.</p>
+            </div>
+
+            <div class="brands-sections">
+                <!-- Marcas Comerciales & Publicidad -->
+                <div>
+                    <p class="brands-category reveal">Publicidad & Marcas Comerciales</p>
+                    <div class="brands-grid reveal delay-1">
+                        <div class="brand-cell">
+                            <span class="brand-name display">
+                                <img src="img/logos/philip-morris.png" alt="Philip Morris" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name display">
+                                <img src="img/logos/ccc.png" alt="CCC" style="height:36px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name display">
+                                <img src="img/logos/clipper.png" alt="Clipper" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/dormitorum.png" alt="Dormitorum" style="height:36px;width:auto;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/mediamarkt.png" alt="MediaMarkt" style="height:32px;width:auto;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/syniva.jpg" alt="Syniva" style="height:32px;width:auto;border-radius:6px;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/do-tacoronte.png" alt="DO Tacoronte" style="height:36px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/segurican.webp" alt="Segurican" style="height:32px;width:auto;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/jti.png" alt="JTI" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/cc-meridiano.png" alt="CC Meridiano" style="height:36px;width:auto;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/cc-el-muelle.png" alt="CC El Muelle" style="height:36px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/premios-teide-oro.png" alt="Premios Teide de Oro" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instituciones -->
+                <div>
+                    <p class="brands-category reveal">Instituciones & Medios</p>
+                    <div class="brands-grid reveal delay-2">
+                        <div class="brand-cell">
+                            <span class="brand-name display">
+                                <img src="img/logos/gobierno-canarias.png" alt="Gobierno de Canarias" style="height:40px;width:auto;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name display">
+                                <img src="img/logos/ayto-las-palmas.png" alt="Ayto Las Palmas" style="height:40px;width:auto;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/mancomunidad-norte.jpg" alt="Mancomunidad Norte" style="height:36px;width:auto;border-radius:4px;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/ceoe.png" alt="CEOE Tenerife" style="height:32px;width:auto;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name display">
+                                <img src="img/logos/tv-canaria.png" alt="TV Canaria" style="height:36px;width:auto;">
+                            </span>
+                        </div>
+                        <div class="brand-cell">
+                            <span class="brand-name">
+                                <img src="img/logos/rtvc.jpg" alt="Radio Club Tenerife" style="height:36px;width:auto;border-radius:4px;">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PRESS / MEDIOS ============ -->
+    <section class="press" id="prensa">
+        <div class="container">
+            <p class="press-label reveal">Como visto en</p>
+            <div class="press-logos reveal delay-1">
+                <span class="press-logo">RTVE</span>
+                <span class="press-logo">TV Canaria</span>
+                <span class="press-logo">Cadena SER</span>
+                <span class="press-logo">Diario de Avisos</span>
+                <span class="press-logo">Canarias7</span>
+                <span class="press-logo">La Provincia</span>
+                <span class="press-logo">El Diario</span>
+                <span class="press-logo">Radio Club Tenerife</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FINAL CTA ============ -->
+    <section class="final-cta" id="contacto">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Hablemos</span>
+                <h2 class="final-cta-title">¿Listo para hacer de tu evento<br>algo inolvidable?</h2>
+                <p class="final-cta-text">Cuéntale a Aarón tu idea. Cada evento es único y merece un toque especial. Sin compromiso, sin fórmulas genéricas. Solo talento a medida.</p>
+                <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                    <a href="mailto:y3producciones@gmail.com" class="btn-primary"><span>Contactar por email</span></a>
+                    <a href="tel:+34689925248" class="btn-secondary"><i class="fa-solid fa-phone"></i> +34 689 92 52 48</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="navbar-logo">Aarón <span>Gómez</span></a>
+                    <p>Humorista, actor y presentador canario. Más de 255K seguidores y una carrera construida show a show, sobre el escenario y frente a la cámara.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Navegación</h4>
+                    <ul>
+                        <li><a href="#sobre">Sobre Aarón</a></li>
+                        <li><a href="#espectaculos">Espectáculos</a></li>
+                        <li><a href="#reel">Actor</a></li>
+                        <li><a href="#corporativo">Corporativo</a></li>
+                        <li><a href="#tienda">Tienda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Shows</h4>
+                    <ul>
+                        <li><a href="#nuevo-show">Gracias (2026)</a></li>
+                        <li><a href="#espectaculos">Una Mala Noche</a></li>
+                        <li><a href="#espectaculos">Sota, Caballo y Rey</a></li>
+                        <li><a href="#espectaculos">El Trámite</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="mailto:y3producciones@gmail.com">y3producciones@gmail.com</a></li>
+                        <li><a href="tel:+34689925248">+34 689 92 52 48</a></li>
+                        <li><a href="#">Management: Y3 Producciones</a></li>
+                        <li><a href="#">Santa Cruz de Tenerife, España</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Aarón Gómez. Todos los derechos reservados.</p>
+                <p>Diseñado con <span class="gold">&hearts;</span> desde Canarias</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============ JAVASCRIPT ============ -->
+    <script>
+    (function() {
+        'use strict';
+
+        /* Page Loader */
+        window.addEventListener('load', function() {
+            setTimeout(function() { document.getElementById('pageLoader').classList.add('hidden'); }, 1800);
+        });
+
+        /* Custom Cursor */
+        const dot = document.getElementById('cursorDot');
+        const ring = document.getElementById('cursorRing');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', function(e) {
+            mx = e.clientX; my = e.clientY;
+            dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+        });
+        (function loop() {
+            rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+            ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+            requestAnimationFrame(loop);
+        })();
+        document.querySelectorAll('a, button, .show-card, .corp-card, .market-card, .play-button, .evento-row').forEach(function(el) {
+            el.addEventListener('mouseenter', function() { ring.classList.add('hover'); });
+            el.addEventListener('mouseleave', function() { ring.classList.remove('hover'); });
+        });
+
+        /* Navbar Scroll */
+        var navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', function() {
+            navbar.classList.toggle('scrolled', window.pageYOffset > 80);
+        });
+
+        /* Mobile Menu */
+        var hamburger = document.getElementById('hamburger');
+        var overlay = document.getElementById('mobileOverlay');
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            overlay.classList.toggle('open');
+            document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
+        });
+        document.querySelectorAll('.mobile-link').forEach(function(l) {
+            l.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                overlay.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+
+        /* Hero Particles */
+        var pc = document.getElementById('heroParticles');
+        for (var i = 0; i < 30; i++) {
+            var p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 8 + 's';
+            p.style.animationDuration = (6 + Math.random() * 6) + 's';
+            var s = (1 + Math.random() * 2) + 'px';
+            p.style.width = s; p.style.height = s;
+            pc.appendChild(p);
+        }
+
+        /* Parallax Hero */
+        var heroBg = document.getElementById('heroBg');
+        window.addEventListener('scroll', function() {
+            var s = window.pageYOffset;
+            if (s < window.innerHeight) heroBg.style.transform = 'translateY(' + (s * 0.3) + 'px)';
+        });
+
+        /* Reveal on Scroll */
+        var reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+        var revObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+        reveals.forEach(function(el) { revObs.observe(el); });
+
+        /* Testimonials Slider */
+        var track = document.getElementById('testimonialsTrack');
+        var navBtns = document.querySelectorAll('#testimonialsNav button');
+        var curr = 0, total = 3;
+        function goSlide(i) {
+            curr = i;
+            track.style.transform = 'translateX(-' + (curr * 100) + '%)';
+            navBtns.forEach(function(b, j) { b.classList.toggle('active', j === curr); });
+        }
+        navBtns.forEach(function(b) { b.addEventListener('click', function() { goSlide(parseInt(b.dataset.index)); }); });
+        document.getElementById('prevTestimonial').addEventListener('click', function() { goSlide((curr - 1 + total) % total); });
+        document.getElementById('nextTestimonial').addEventListener('click', function() { goSlide((curr + 1) % total); });
+        var autoSl = setInterval(function() { goSlide((curr + 1) % total); }, 7000);
+        document.querySelector('.testimonials-slider').addEventListener('mouseenter', function() { clearInterval(autoSl); });
+        document.querySelector('.testimonials-slider').addEventListener('mouseleave', function() { autoSl = setInterval(function() { goSlide((curr + 1) % total); }, 7000); });
+
+        /* Counter Animation */
+        document.querySelectorAll('.stat-number').forEach(function(el) {
+            new IntersectionObserver(function(entries, obs) {
+                if (entries[0].isIntersecting) {
+                    var txt = el.textContent, m = txt.match(/(\d+)/);
+                    if (m) {
+                        var tgt = parseInt(m[1]), sfx = txt.replace(/\d+/, ''), c = 0, inc = tgt / 60;
+                        var tmr = setInterval(function() {
+                            c += inc; if (c >= tgt) { c = tgt; clearInterval(tmr); }
+                            el.textContent = Math.floor(c) + sfx;
+                        }, 25);
+                    }
+                    obs.unobserve(el);
+                }
+            }, { threshold: 0.5 }).observe(el);
+        });
+
+        /* Smooth Scroll */
+        document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+            a.addEventListener('click', function(e) {
+                e.preventDefault();
+                var t = document.querySelector(this.getAttribute('href'));
+                if (t) {
+                    var off = navbar.offsetHeight;
+                    window.scrollTo({ top: t.getBoundingClientRect().top + window.pageYOffset - off, behavior: 'smooth' });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>                           
