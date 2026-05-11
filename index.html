@@ -1598,10 +1598,13 @@
     (function() {
         'use strict';
 
-        /* Page Loader */
-        window.addEventListener('load', function() {
-            setTimeout(function() { document.getElementById('pageLoader').classList.add('hidden'); }, 1800);
-        });
+        /* Page Loader — hide after 2s max, even if images fail */
+        function hideLoader() {
+            var loader = document.getElementById('pageLoader');
+            if (loader) loader.classList.add('hidden');
+        }
+        window.addEventListener('load', function() { setTimeout(hideLoader, 1200); });
+        setTimeout(hideLoader, 3000); /* fallback: hide after 3s no matter what */
 
         /* Custom Cursor */
         const dot = document.getElementById('cursorDot');
@@ -1659,9 +1662,4 @@
 
         /* Parallax Hero */
         var heroBg = document.getElementById('heroBg');
-        window.addEventListener('scroll', function() {
-            var s = window.pageYOffset;
-            if (s < window.innerHeight) heroBg.style.transform = 'translateY(' + (s * 0.3) + 'px)';
-        });
-
-       
+        window
