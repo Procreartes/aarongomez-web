@@ -721,12 +721,12 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .press-label { text-align: center; font-size: 0.75rem; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: var(--gray); margin-bottom: 48px; }
+        .press-label { text-align: center; font-size: 0.75rem; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 48px; }
         .press-logos { display: flex; justify-content: center; align-items: center; gap: 60px; flex-wrap: wrap; }
         .press-logo {
-            font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
-            color: var(--gray-dark); letter-spacing: 3px; text-transform: uppercase;
-            opacity: 0.5; transition: opacity var(--transition), color var(--transition);
+            font-family: var(--font-display); font-size: 1.3rem; font-weight: 700;
+            color: var(--white-soft); letter-spacing: 3px; text-transform: uppercase;
+            opacity: 0.6; transition: opacity var(--transition), color var(--transition);
             white-space: nowrap;
         }
         .press-logo:hover { opacity: 1; color: var(--gold); }
@@ -754,18 +754,18 @@
         .brand-cell {
             background: var(--black);
             display: flex; align-items: center; justify-content: center;
-            padding: 36px 20px; min-height: 110px;
+            padding: 36px 20px; min-height: 120px;
             transition: all 0.4s ease; position: relative; overflow: hidden;
         }
         .brand-cell::before {
             content: ''; position: absolute; inset: 0;
-            background: rgba(212, 168, 83, 0.04);
+            background: rgba(212, 168, 83, 0.06);
             opacity: 0; transition: opacity 0.4s;
         }
         .brand-cell:hover::before { opacity: 1; }
         .brand-cell:hover { z-index: 1; }
         .brand-cell:hover .brand-name { opacity: 1; color: var(--gold); }
-        .brand-cell:hover img { opacity: 1; filter: none; }
+        .brand-cell:hover img { opacity: 1; transform: scale(1.05); }
 
         .brand-name {
             font-family: var(--font-body); font-size: 0.7rem; font-weight: 600;
@@ -774,7 +774,7 @@
             line-height: 1.4; position: relative; z-index: 1;
         }
         .brand-cell img {
-            max-width: 80%; object-fit: contain; transition: all 0.4s;
+            max-width: 90%; max-height: 50px; object-fit: contain; transition: all 0.4s; opacity: 0.85;
         }
         /* Variation: bigger brands get display font */
         .brand-name.display {
@@ -854,6 +854,10 @@
 
         @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
 
+        /* Responsive: Columna cards stack on mobile */
+        @media (max-width: 768px) {
+            #columna .container > div:nth-child(2) { grid-template-columns: 1fr !important; }
+        }
         /* Responsive: Gracias banner stacks on mobile */
         @media (max-width: 768px) {
             .gracias-banner { grid-template-columns: 1fr !important; gap: 0 !important; text-align: center; }
@@ -1215,20 +1219,33 @@
     </section>
 
     <!-- ============ COLUMNA DIARIO DE AVISOS ============ -->
-    <section style="padding:80px 0;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);" id="columna">
+    <section style="padding:100px 0;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);background:linear-gradient(180deg, var(--black) 0%, rgba(20,18,15,1) 50%, var(--black) 100%);" id="columna">
         <div class="container">
-            <div style="display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;max-width:900px;margin:0 auto;" class="reveal">
-                <div style="text-align:center;">
-                    <i class="fa-solid fa-pen-fancy" style="font-size:2.5rem;color:var(--gold);margin-bottom:16px;display:block;"></i>
-                    <div style="font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--white);line-height:1.2;">Diario<br>de Avisos</div>
-                    <div style="font-size:0.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:2px;margin-top:8px;">Columna semanal</div>
+            <div style="text-align:center;margin-bottom:48px;" class="reveal">
+                <span class="section-label">Aarón escribe</span>
+                <h2 class="section-title">Columna semanal en Diario de Avisos</h2>
+                <div class="gold-line" style="margin:0 auto 24px;"></div>
+                <p style="max-width:600px;margin:0 auto;color:var(--gray);font-size:0.95rem;line-height:1.7;">Más allá del escenario, Aarón reflexiona, protesta y digiere el mundo. Humor, prosa poética y una mirada personal sobre la vida y las islas.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px;margin:0 auto 40px;" class="reveal delay-1">
+                <a href="https://diariodeavisos.elespanol.com/author/aarongomez/" target="_blank" style="text-decoration:none;display:block;background:var(--black-card);border:1px solid rgba(255,255,255,0.06);padding:28px 24px;transition:all 0.3s;border-top:3px solid var(--gold);">
+                    <div style="font-size:0.6rem;color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;"><i class="fa-solid fa-pen-fancy"></i> Última columna</div>
+                    <div style="font-family:var(--font-display);font-size:1.05rem;color:var(--white);font-weight:700;line-height:1.3;margin-bottom:8px;">Leer el artículo más reciente</div>
+                    <div style="font-size:0.75rem;color:var(--gray);">Nueva columna cada semana <i class="fa-solid fa-arrow-right" style="margin-left:4px;"></i></div>
+                </a>
+                <a href="https://diariodeavisos.elespanol.com/author/aarongomez/" target="_blank" style="text-decoration:none;display:block;background:var(--black-card);border:1px solid rgba(255,255,255,0.06);padding:28px 24px;transition:all 0.3s;">
+                    <div style="font-size:0.6rem;color:var(--gray);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;"><i class="fa-solid fa-bookmark"></i> Archivo</div>
+                    <div style="font-family:var(--font-display);font-size:1.05rem;color:var(--white-soft);font-weight:700;line-height:1.3;margin-bottom:8px;">Todas las columnas publicadas</div>
+                    <div style="font-size:0.75rem;color:var(--gray);">Archivo completo <i class="fa-solid fa-arrow-right" style="margin-left:4px;"></i></div>
+                </a>
+                <div style="background:var(--black-card);border:1px solid rgba(255,255,255,0.06);padding:28px 24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+                    <i class="fa-solid fa-newspaper" style="font-size:1.8rem;color:var(--gold);margin-bottom:12px;"></i>
+                    <div style="font-family:var(--font-display);font-size:1.1rem;color:var(--white);font-weight:700;margin-bottom:4px;">Diario de Avisos</div>
+                    <div style="font-size:0.7rem;color:var(--gray);letter-spacing:1px;">Desde 2023</div>
                 </div>
-                <div>
-                    <span class="section-label">Aarón escribe</span>
-                    <h3 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:12px;">Cada semana, una nueva mirada</h3>
-                    <p style="font-size:0.95rem;color:var(--white-soft);font-weight:300;margin-bottom:20px;line-height:1.7;">Más allá del escenario, Aarón reflexiona, protesta y digiere el mundo a través de su columna semanal en el Diario de Avisos. Humor, prosa poética y una mirada personal sobre la vida, las islas y todo lo que nos pasa.</p>
-                    <a href="https://diariodeavisos.elespanol.com" target="_blank" class="btn-outline-sm"><i class="fa-solid fa-newspaper"></i> Leer última columna</a>
-                </div>
+            </div>
+            <div style="text-align:center;" class="reveal delay-2">
+                <a href="https://diariodeavisos.elespanol.com/author/aarongomez/" target="_blank" class="btn-primary"><span><i class="fa-solid fa-newspaper"></i> Ver todas las columnas</span></a>
             </div>
         </div>
     </section>
@@ -1305,18 +1322,22 @@
                         <a href="#contacto" class="btn-outline-sm"><i class="fa-solid fa-bell"></i> Avisarme</a>
                     </div>
                 </div>
-                <!-- MERCH / PLACEHOLDER -->
+                <!-- MERCH GRACIAS — PRÓXIMAMENTE -->
                 <div class="market-card reveal delay-3">
-                    <div class="market-card-image">
-                        <div class="img-placeholder">
-                            <div class="photo-label"><i class="fa-solid fa-shirt"></i><br>Merch Oficial</div>
+                    <div class="market-card-image" style="position:relative;">
+                        <img src="img/gracias-poster.jpg" alt="Merch GRACIAS" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.4);">
+                        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;">
+                            <i class="fa-solid fa-shirt" style="font-size:2.5rem;color:var(--gold);margin-bottom:12px;"></i>
+                            <span style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--white);letter-spacing:1px;">MERCH</span>
+                            <span style="font-size:1rem;font-weight:700;color:var(--gold);letter-spacing:3px;margin-top:4px;">GRACIAS</span>
+                            <span style="font-size:0.6rem;text-transform:uppercase;letter-spacing:3px;color:var(--gray);margin-top:12px;background:rgba(0,0,0,0.6);padding:6px 16px;border:1px solid rgba(212,168,83,0.3);">Próximamente</span>
                         </div>
                     </div>
                     <div class="market-card-body">
-                        <h4>Merch Oficial</h4>
-                        <p class="price">Desde 19,95 &euro;</p>
-                        <p>Camisetas, tazas y accesorios con el sello Aarón Gómez. Ediciones limitadas disponibles tras cada estreno.</p>
-                        <a href="#" class="btn-outline-sm"><i class="fa-solid fa-cart-shopping"></i> Ver tienda</a>
+                        <h4>Merch GRACIAS <span style="color:var(--gold);">· Próximamente</span></h4>
+                        <p class="price">Disponible con el estreno</p>
+                        <p>Camisetas, tazas y accesorios exclusivos del nuevo show. Suscríbete para enterarte del lanzamiento.</p>
+                        <a href="#contacto" class="btn-outline-sm"><i class="fa-solid fa-bell"></i> Avisarme</a>
                     </div>
                 </div>
             </div>
@@ -1388,62 +1409,62 @@
                     <div class="brands-grid reveal delay-1">
                         <div class="brand-cell">
                             <span class="brand-name display">
-                                <img src="img/logos/philip-morris.png" alt="Philip Morris" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                                <img src="img/logos/philip-morris.png" alt="Philip Morris" style="height:44px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name display">
-                                <img src="img/logos/ccc.png" alt="CCC" style="height:36px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                                <img src="img/logos/ccc.png" alt="CCC" style="height:48px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name display">
-                                <img src="img/logos/clipper.png" alt="Clipper" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                                <img src="img/logos/clipper.png" alt="Clipper" style="height:44px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/dormitorum.png" alt="Dormitorum" style="height:36px;width:auto;">
+                                <img src="img/logos/dormitorum.png" alt="Dormitorum" style="height:48px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/mediamarkt.png" alt="MediaMarkt" style="height:32px;width:auto;">
+                                <img src="img/logos/mediamarkt.png" alt="MediaMarkt" style="height:44px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/syniva.jpg" alt="Syniva" style="height:32px;width:auto;border-radius:6px;">
+                                <img src="img/logos/syniva.jpg" alt="Syniva" style="height:44px;width:auto;border-radius:6px;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/do-tacoronte.png" alt="DO Tacoronte" style="height:36px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                                <img src="img/logos/do-tacoronte.png" alt="DO Tacoronte" style="height:48px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/segurican.webp" alt="Segurican" style="height:32px;width:auto;">
+                                <img src="img/logos/segurican.webp" alt="Segurican" style="height:44px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/jti.png" alt="JTI" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                                <img src="img/logos/jti.png" alt="JTI" style="height:44px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/cc-meridiano.png" alt="CC Meridiano" style="height:36px;width:auto;">
+                                <img src="img/logos/cc-meridiano.png" alt="CC Meridiano" style="height:48px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/cc-el-muelle.png" alt="CC El Muelle" style="height:36px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                                <img src="img/logos/cc-el-muelle.png" alt="CC El Muelle" style="height:48px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/premios-teide-oro.png" alt="Premios Teide de Oro" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:0.8;">
+                                <img src="img/logos/premios-teide-oro.png" alt="Premios Teide de Oro" style="height:44px;width:auto;">
                             </span>
                         </div>
                     </div>
@@ -1455,32 +1476,32 @@
                     <div class="brands-grid reveal delay-2">
                         <div class="brand-cell">
                             <span class="brand-name display">
-                                <img src="img/logos/gobierno-canarias.png" alt="Gobierno de Canarias" style="height:40px;width:auto;">
+                                <img src="img/logos/gobierno-canarias.png" alt="Gobierno de Canarias" style="height:52px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name display">
-                                <img src="img/logos/ayto-las-palmas.png" alt="Ayto Las Palmas" style="height:40px;width:auto;">
+                                <img src="img/logos/ayto-las-palmas.png" alt="Ayto Las Palmas" style="height:52px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/mancomunidad-norte.jpg" alt="Mancomunidad Norte" style="height:36px;width:auto;border-radius:4px;">
+                                <img src="img/logos/mancomunidad-norte.jpg" alt="Mancomunidad Norte" style="height:48px;width:auto;border-radius:4px;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/ceoe.png" alt="CEOE Tenerife" style="height:32px;width:auto;">
+                                <img src="img/logos/ceoe.png" alt="CEOE Tenerife" style="height:44px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name display">
-                                <img src="img/logos/tv-canaria.png" alt="TV Canaria" style="height:36px;width:auto;">
+                                <img src="img/logos/tv-canaria.png" alt="TV Canaria" style="height:48px;width:auto;">
                             </span>
                         </div>
                         <div class="brand-cell">
                             <span class="brand-name">
-                                <img src="img/logos/rtvc.jpg" alt="Radio Club Tenerife" style="height:36px;width:auto;border-radius:4px;">
+                                <img src="img/logos/rtvc.jpg" alt="Radio Club Tenerife" style="height:48px;width:auto;border-radius:4px;">
                             </span>
                         </div>
                     </div>
@@ -1529,11 +1550,11 @@
                     <a href="#" class="navbar-logo">Aarón <span>Gómez</span></a>
                     <p>Humorista, actor y presentador canario. Más de 255K seguidores y una carrera construida show a show, sobre el escenario y frente a la cámara.</p>
                     <div class="footer-social">
-                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                        <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-                        <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/aarongomezrosales/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@LyoTenea" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@aarongomez.0" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="https://x.com/aarondogoro" target="_blank" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://www.facebook.com/AaronGomezOficial/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
@@ -1643,60 +1664,4 @@
             if (s < window.innerHeight) heroBg.style.transform = 'translateY(' + (s * 0.3) + 'px)';
         });
 
-        /* Reveal on Scroll */
-        var reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-        var revObs = new IntersectionObserver(function(entries) {
-            entries.forEach(function(e) {
-                if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
-        reveals.forEach(function(el) { revObs.observe(el); });
-
-        /* Testimonials Slider */
-        var track = document.getElementById('testimonialsTrack');
-        var navBtns = document.querySelectorAll('#testimonialsNav button');
-        var curr = 0, total = 3;
-        function goSlide(i) {
-            curr = i;
-            track.style.transform = 'translateX(-' + (curr * 100) + '%)';
-            navBtns.forEach(function(b, j) { b.classList.toggle('active', j === curr); });
-        }
-        navBtns.forEach(function(b) { b.addEventListener('click', function() { goSlide(parseInt(b.dataset.index)); }); });
-        document.getElementById('prevTestimonial').addEventListener('click', function() { goSlide((curr - 1 + total) % total); });
-        document.getElementById('nextTestimonial').addEventListener('click', function() { goSlide((curr + 1) % total); });
-        var autoSl = setInterval(function() { goSlide((curr + 1) % total); }, 7000);
-        document.querySelector('.testimonials-slider').addEventListener('mouseenter', function() { clearInterval(autoSl); });
-        document.querySelector('.testimonials-slider').addEventListener('mouseleave', function() { autoSl = setInterval(function() { goSlide((curr + 1) % total); }, 7000); });
-
-        /* Counter Animation */
-        document.querySelectorAll('.stat-number').forEach(function(el) {
-            new IntersectionObserver(function(entries, obs) {
-                if (entries[0].isIntersecting) {
-                    var txt = el.textContent, m = txt.match(/(\d+)/);
-                    if (m) {
-                        var tgt = parseInt(m[1]), sfx = txt.replace(/\d+/, ''), c = 0, inc = tgt / 60;
-                        var tmr = setInterval(function() {
-                            c += inc; if (c >= tgt) { c = tgt; clearInterval(tmr); }
-                            el.textContent = Math.floor(c) + sfx;
-                        }, 25);
-                    }
-                    obs.unobserve(el);
-                }
-            }, { threshold: 0.5 }).observe(el);
-        });
-
-        /* Smooth Scroll */
-        document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-            a.addEventListener('click', function(e) {
-                e.preventDefault();
-                var t = document.querySelector(this.getAttribute('href'));
-                if (t) {
-                    var off = navbar.offsetHeight;
-                    window.scrollTo({ top: t.getBoundingClientRect().top + window.pageYOffset - off, behavior: 'smooth' });
-                }
-            });
-        });
-    })();
-    </script>
-</body>
-</html>                           
+       
