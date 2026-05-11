@@ -1630,32 +1630,33 @@
         }
 
         /* Navbar Scroll */
+        try {
         var navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', function() {
+        if (navbar) window.addEventListener('scroll', function() {
             navbar.classList.toggle('scrolled', window.pageYOffset > 80);
         });
 
         /* Mobile Menu */
         var hamburger = document.getElementById('hamburger');
         var overlay = document.getElementById('mobileOverlay');
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            overlay.classList.toggle('open');
-            document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
-        });
-        document.querySelectorAll('.mobile-link').forEach(function(l) {
-            l.addEventListener('click', function() {
-                hamburger.classList.remove('active');
-                overlay.classList.remove('open');
-                document.body.style.overflow = '';
+        if (hamburger && overlay) {
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                overlay.classList.toggle('open');
+                document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : '';
             });
-        });
+            document.querySelectorAll('.mobile-link').forEach(function(l) {
+                l.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    overlay.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
 
         /* Hero Particles */
         var pc = document.getElementById('heroParticles');
-        for (var i = 0; i < 30; i++) {
-            var p = document.createElement('div');
-            p.className = 'particle';
-            p.style.left = Math.random() * 100 + '%';
-            p.style.top = Math.random() * 100 + '%';
-            p.style.animationDelay = Ma
+        if (pc) {
+            for (var i = 0; i < 30; i++) {
+                var p = document.createElement('div');
+                p.className = 'particl
