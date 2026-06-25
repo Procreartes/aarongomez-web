@@ -74,7 +74,7 @@
   .btn.sm{padding:7px 14px; font-size:.8rem;}
 
   /* Toolbar */
-  .toolbar{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:6px;}
+  .toolbar{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:6px; position:sticky; top:0; z-index:30; background:var(--black); padding:12px 0; border-bottom:1px solid var(--line);}
   .toolbar .spacer{flex:1;}
   .savewrap{display:flex; align-items:center; gap:10px;}
   .unsaved{font-size:.78rem; color:var(--amber); display:none;}
@@ -137,6 +137,7 @@
   <header class="bar">
     <div class="brand">Aarón Gómez<small>Panel de agenda</small></div>
     <div class="conn">
+      <a class="linkbtn" id="viewSiteBtn" href="https://aaron-gomez.com/#eventos" target="_blank" rel="noopener">Ver la web ↗</a>
       <span class="dot" id="connDot"></span>
       <span id="connText">Sin conectar</span>
       <button class="linkbtn hidden" id="logoutBtn">Desconectar</button>
@@ -202,6 +203,7 @@
         <label for="fDate">Fecha <span class="req">*</span></label>
         <input type="date" id="fDate">
         <p class="hint">Lo que ordena y archiva la fecha.</p>
+        <p class="hint" id="pastHint" style="color:var(--amber); display:none;">⚠ Esta fecha ya pasó: aparecerá en “Actuaciones anteriores”.</p>
       </div>
       <div class="field">
         <label for="fTime">Hora</label>
@@ -410,10 +412,17 @@
     $("fStatus").value = ev ? (ev.status||"") : "";
     $("fTag").value = ev ? (ev.tag||"") : "";
     $("modalDelete").classList.toggle("hidden", !ev);
+    updatePastHint();
     $("overlay").classList.add("show");
     setTimeout(function(){ $("fTitle").focus(); }, 50);
   }
   function cerrarModal(){ $("overlay").classList.remove("show"); }
+  function updatePastHint(){
+    var h=$("pastHint"); if(!h) return;
+    var f=parseFecha($("fDate").value);
+    var hoy=new Date(); hoy.setHours(0,0,0,0);
+    h.style.display = (f && f.getTime()<hoy.getTime()) ? "block" : "none";
+  }
 
   function guardarModal(){
     var title=$("fTitle").value.trim();
@@ -489,7 +498,13 @@
     $("modalCancel").addEventListener("click", cerrarModal);
     $("modalDelete").addEventListener("click", borrarModal);
     $("overlay").addEventListener("click", function(e){ if(e.target===$("overlay")) cerrarModal(); });
-    document.addEventListener("keydown", function(e){ if(e.key==="Escape" && $("overlay").classList.contains("show")) cerrarModal(); });
+    $("fDate").addEventListener("change", updatePastHint);
+    $("fDate").addEventListener("input", updatePastHint);
+    document.addEventListener("keydown", function(e){
+      if(!$("overlay").classList.contains("show")) return;
+      if(e.key==="Escape"){ cerrarModal(); }
+      else if(e.key==="Enter" && (e.ctrlKey||e.metaKey)){ e.preventDefault(); guardarModal(); }
+    });
     window.addEventListener("beforeunload", function(e){ if(dirty){ e.preventDefault(); e.returnValue=""; } });
 
     if(token){
