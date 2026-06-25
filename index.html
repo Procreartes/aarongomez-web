@@ -483,6 +483,46 @@
             .evento-actions { grid-column: 1 / -1; justify-content: flex-start; margin-top: 8px; }
         }
 
+        /* --- Autoarchivado de eventos --- */
+        .eventos-loading {
+            text-align: center; color: var(--gray); font-weight: 300;
+            font-size: 0.95rem; padding: 24px 0;
+        }
+        .eventos-empty {
+            text-align: center; color: var(--gray); font-weight: 300;
+            font-size: 0.95rem; padding: 24px 0;
+        }
+        .evento-row.pasado { opacity: 0.55; }
+        .evento-row.pasado:hover { background: transparent; padding-left: 0; padding-right: 0; }
+        .evento-row.pasado .evento-date .day { color: var(--gray); }
+        .evento-row.pasado .evento-actions { display: none; }
+        .evento-row.pasado .evento-info h4::after {
+            content: "Realizada"; display: inline-block; margin-left: 10px;
+            font-family: var(--font-body); font-size: 0.6rem; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase; color: var(--red-pasado);
+            border: 1px solid var(--red-pasado); padding: 3px 8px; vertical-align: middle;
+        }
+
+        .eventos-archivo { max-width: 900px; margin: 40px auto 0; }
+        .eventos-archivo summary {
+            cursor: pointer; list-style: none; display: flex; align-items: center; gap: 12px;
+            font-family: var(--font-body); font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase; color: var(--gray);
+            padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.06);
+            transition: color 0.3s; user-select: none;
+        }
+        .eventos-archivo summary:hover { color: var(--white-soft); }
+        .eventos-archivo summary::-webkit-details-marker { display: none; }
+        .eventos-archivo summary::after { content: "+"; margin-left: auto; font-size: 1.3rem; line-height: 1; color: var(--gold); }
+        .eventos-archivo[open] summary::after { content: "\2013"; }
+        .eventos-archivo-count {
+            font-size: 0.65rem; letter-spacing: 1px; color: var(--gold);
+            border: 1px solid rgba(212,168,83,0.4); border-radius: 999px; padding: 1px 9px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .evento-row { transition: none; }
+        }
+
         /* ============================================
            SHOWS / ESPECTACULOS
            ============================================ */
@@ -1024,12 +1064,11 @@
     <!-- ============ PROXIMOS EVENTOS / ENTRADAS ============ -->
     <!--
         =============================================
-        PARA ACTUALIZAR EVENTOS:
-        1. Copia un bloque <div class="evento-row"> existente
-        2. Cambia: día, mes, título, venue, y enlace de entradas
-        3. Para marcar "Agotado": sustituye el btn-coral por <span class="badge-sold-out">Agotado</span>
-        4. Para "Últimas plazas": añade <span class="badge-few-left"><i class="fa-solid fa-fire"></i> Últimas plazas</span>
-        5. Para quitar un evento pasado: elimina su bloque <div class="evento-row">
+        AGENDA AUTOMATICA - NO HACE FALTA TOCAR ESTE BLOQUE
+        Las fechas se cargan solas desde  data/eventos.json
+        Para anadir, editar o borrar fechas, abre el panel:
+            /admin.html   (pantalla de administracion con formulario)
+        El archivado de fechas pasadas es automatico.
         =============================================
     -->
     <section class="eventos" id="eventos">
@@ -1040,68 +1079,19 @@
                 <div class="gold-line"></div>
                 <p style="font-size:0.95rem;color:var(--gray);font-weight:300;max-width:650px;margin:0 auto;">Consigue tus entradas para cada función a través de los enlaces oficiales.</p>
             </div>
-            <div class="eventos-list">
-                <!-- EVENTO 1 — Tito's Teatro, Puerto de la Cruz -->
-                <div class="evento-row reveal delay-1">
-                    <div class="evento-date">
-                        <div class="day">22</div>
-                        <div class="month">May 2026</div>
-                    </div>
-                    <div class="evento-info">
-                        <h4>Monólogo de Aarón Gómez</h4>
-                        <p class="evento-venue"><i class="fa-solid fa-location-dot"></i>Tito's Teatro — Puerto de la Cruz, Tenerife</p>
-                        <p class="evento-venue" style="margin-top:4px;"><i class="fa-solid fa-clock" style="color:var(--gold);margin-right:6px;font-size:0.75rem;"></i>20:45 h</p>
-                    </div>
-                    <div class="evento-actions">
-                        <a href="https://titostenerife.com/evento/monologo-de-aaron-gomez/" target="_blank" class="btn-coral"><i class="fa-solid fa-ticket"></i> Comprar entradas</a>
-                    </div>
-                </div>
-                <!-- EVENTO 2 — GRACIAS: Estreno absoluto, Lanzarote -->
-                <div class="evento-row reveal delay-2">
-                    <div class="evento-date">
-                        <div class="day">15</div>
-                        <div class="month">Oct 2026</div>
-                    </div>
-                    <div class="evento-info">
-                        <h4>GRACIAS — Estreno Absoluto <span style="font-size:0.6rem;background:var(--coral);color:#fff;padding:3px 8px;margin-left:8px;letter-spacing:1px;text-transform:uppercase;font-weight:700;vertical-align:middle;">Estreno</span></h4>
-                        <p class="evento-venue"><i class="fa-solid fa-location-dot"></i>Teatro Municipal de San Bartolomé, Lanzarote</p>
-                        <p class="evento-venue" style="margin-top:4px;"><i class="fa-solid fa-clock" style="color:var(--gold);margin-right:6px;font-size:0.75rem;"></i>20:30 h</p>
-                    </div>
-                    <div class="evento-actions">
-                        <a href="https://www.ecoentradas.com/elegirsesion/3171" target="_blank" class="btn-coral"><i class="fa-solid fa-ticket"></i> Comprar entradas</a>
-                    </div>
-                </div>
-                <!-- EVENTO 3 — GRACIAS: Telde, Gran Canaria -->
-                <div class="evento-row reveal delay-3">
-                    <div class="evento-date">
-                        <div class="day">16</div>
-                        <div class="month">Oct 2026</div>
-                    </div>
-                    <div class="evento-info">
-                        <h4>GRACIAS</h4>
-                        <p class="evento-venue"><i class="fa-solid fa-location-dot"></i>Teatro Municipal Juan Ramón Jiménez (Telde), Gran Canaria</p>
-                        <p class="evento-venue" style="margin-top:4px;"><i class="fa-solid fa-clock" style="color:var(--gold);margin-right:6px;font-size:0.75rem;"></i>20:30 h</p>
-                    </div>
-                    <div class="evento-actions">
-                        <a href="https://www.tureservaonline.es/es/events/gracias" target="_blank" class="btn-coral"><i class="fa-solid fa-ticket"></i> Comprar entradas</a>
-                    </div>
-                </div>
-                <!-- EVENTO 4 — GRACIAS: Paraninfo ULL, La Laguna -->
-                <div class="evento-row reveal delay-4">
-                    <div class="evento-date">
-                        <div class="day">18</div>
-                        <div class="month">Oct 2026</div>
-                    </div>
-                    <div class="evento-info">
-                        <h4>GRACIAS</h4>
-                        <p class="evento-venue"><i class="fa-solid fa-location-dot"></i>Paraninfo de la ULL (La Laguna), Tenerife</p>
-                        <p class="evento-venue" style="margin-top:4px;"><i class="fa-solid fa-clock" style="color:var(--gold);margin-right:6px;font-size:0.75rem;"></i>19:00 h</p>
-                    </div>
-                    <div class="evento-actions">
-                        <a href="https://www.ecoentradas.com/elegirsesion/3178" target="_blank" class="btn-coral"><i class="fa-solid fa-ticket"></i> Comprar entradas</a>
-                    </div>
-                </div>
+            <div class="eventos-list" id="eventosListMain">
+                <p class="eventos-loading" id="eventosLoading">Cargando agenda...</p>
             </div>
+
+            <!-- Mensaje si no hay próximos eventos (lo controla el JS automáticamente) -->
+            <p class="eventos-empty" id="eventosEmpty" hidden>Pronto anunciaremos nuevas fechas. ¡Vuelve pronto!</p>
+
+            <!-- ACTUACIONES ANTERIORES: se rellena solo con los eventos ya pasados. No tocar. -->
+            <details class="eventos-archivo" id="eventosArchivo" hidden>
+                <summary>Actuaciones anteriores <span class="eventos-archivo-count" id="eventosArchivoCount">0</span></summary>
+                <div class="eventos-list" id="eventosArchivoList"></div>
+            </details>
+
             <p style="text-align:center;margin-top:40px;font-size:0.85rem;color:var(--gray);font-weight:300;"><i class="fa-solid fa-circle-info" style="margin-right:6px;color:var(--gold);"></i>¿Quieres llevar a Aarón a tu teatro, festival o evento? <a href="#contacto" style="color:var(--gold);text-decoration:none;font-weight:600;">Contacta con su equipo</a></p>
         </div>
     </section>
@@ -1760,6 +1750,96 @@
             });
         });
         } catch (err) { /* fail silently: los fallbacks CSS mantienen la web usable */ }
+    })();
+    </script>
+    <!-- ============ AGENDA: CARGA DESDE JSON + AUTOARCHIVADO ============ -->
+    <script>
+    (function () {
+        "use strict";
+        var JSON_URL = "data/eventos.json";
+        var MESES = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+
+        function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
+
+        function parseFecha(s){
+            if(!s) return null;
+            var p=String(s).trim().split("-");
+            if(p.length<3) return null;
+            var d=new Date(parseInt(p[0],10),parseInt(p[1],10)-1,parseInt(p[2],10));
+            return isNaN(d.getTime())?null:d;
+        }
+
+        function acciones(ev){
+            if(ev.status==="soldout"){ return '<span class="badge-sold-out">Agotado</span>'; }
+            var html="";
+            if(ev.ticketUrl){ html+='<a href="'+esc(ev.ticketUrl)+'" target="_blank" rel="noopener" class="btn-coral"><i class="fa-solid fa-ticket"></i> Comprar entradas</a>'; }
+            if(ev.status==="fewleft"){ html+='<span class="badge-few-left"><i class="fa-solid fa-fire"></i> Ultimas plazas</span>'; }
+            return html;
+        }
+
+        function fila(ev){
+            var f=parseFecha(ev.date);
+            var day=f?f.getDate():"?";
+            var mon=f?(MESES[f.getMonth()]+" "+f.getFullYear()):"";
+            var tag=ev.tag?' <span style="font-size:0.6rem;background:var(--coral);color:#fff;padding:3px 8px;margin-left:8px;letter-spacing:1px;text-transform:uppercase;font-weight:700;vertical-align:middle;">'+esc(ev.tag)+'</span>':"";
+            var div=document.createElement("div");
+            div.className="evento-row reveal visible";
+            div.setAttribute("data-date", ev.date||"");
+            div.innerHTML=
+                '<div class="evento-date"><div class="day">'+esc(day)+'</div><div class="month">'+esc(mon)+'</div></div>'+
+                '<div class="evento-info"><h4>'+esc(ev.title||"")+tag+'</h4>'+
+                    '<p class="evento-venue"><i class="fa-solid fa-location-dot"></i>'+esc(ev.venue||"")+'</p>'+
+                    (ev.time?'<p class="evento-venue" style="margin-top:4px;"><i class="fa-solid fa-clock" style="color:var(--gold);margin-right:6px;font-size:0.75rem;"></i>'+esc(ev.time)+' h</p>':"")+
+                '</div>'+
+                '<div class="evento-actions">'+acciones(ev)+'</div>';
+            return div;
+        }
+
+        function pintar(eventos){
+            var main=document.getElementById("eventosListMain");
+            var loading=document.getElementById("eventosLoading");
+            var archivo=document.getElementById("eventosArchivo");
+            var listaArch=document.getElementById("eventosArchivoList");
+            var cuenta=document.getElementById("eventosArchivoCount");
+            var vacio=document.getElementById("eventosEmpty");
+            if(!main) return;
+            if(loading && loading.parentNode){ loading.parentNode.removeChild(loading); }
+
+            var hoy=new Date(); hoy.setHours(0,0,0,0);
+            var lista=Array.isArray(eventos)?eventos.slice():[];
+            var prox=[],pas=[];
+            lista.forEach(function(ev){
+                var f=parseFecha(ev.date);
+                if(!f) return;
+                (f.getTime()<hoy.getTime()?pas:prox).push({ev:ev,f:f});
+            });
+            prox.sort(function(a,b){return a.f-b.f;});
+            pas.sort(function(a,b){return b.f-a.f;});
+
+            main.innerHTML="";
+            prox.forEach(function(o){ main.appendChild(fila(o.ev)); });
+
+            if(listaArch){ listaArch.innerHTML=""; }
+            if(pas.length && listaArch && archivo && cuenta){
+                pas.forEach(function(o){ var row=fila(o.ev); row.classList.add("pasado"); listaArch.appendChild(row); });
+                cuenta.textContent=pas.length;
+                archivo.hidden=false;
+            } else if(archivo){ archivo.hidden=true; }
+
+            if(vacio){ vacio.hidden = prox.length>0; }
+        }
+
+        function init(){
+            fetch(JSON_URL,{cache:"no-store"})
+                .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
+                .then(function(data){ pintar(Array.isArray(data)?data:(data&&data.eventos)||[]); })
+                .catch(function(e){
+                    var loading=document.getElementById("eventosLoading");
+                    if(loading){ loading.textContent="No se pudo cargar la agenda en este momento."; }
+                    if(window.console){ console.warn("Agenda:",e); }
+                });
+        }
+        if(document.readyState==="loading"){ document.addEventListener("DOMContentLoaded",init); } else { init(); }
     })();
     </script>
 </body>

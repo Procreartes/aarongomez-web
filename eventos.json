@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ev-monologo-titos-20260522",
+    "date": "2026-05-22",
+    "title": "Monólogo de Aarón Gómez",
+    "venue": "Tito's Teatro — Puerto de la Cruz, Tenerife",
+    "time": "20:45",
+    "ticketUrl": "https://titostenerife.com/evento/monologo-de-aaron-gomez/",
+    "status": "",
+    "tag": ""
+  },
+  {
+    "id": "ev-decerca-elhierro-20260703",
+    "date": "2026-07-03",
+    "title": "DE CERCA — Humor e Improvisación",
+    "venue": "Sala Asabanos — El Hierro",
+    "time": "20:30",
+    "ticketUrl": "https://entradas.ticketlop.es/es/events/aaron-gomez-de-cerca",
+    "status": "",
+    "tag": ""
+  },
+  {
+    "id": "ev-decerca-grancanaria-20260717",
+    "date": "2026-07-17",
+    "title": "DE CERCA — Humor e Improvisación",
+    "venue": "La Cantina del Arte — Vecindario, Gran Canaria",
+    "time": "20:30",
+    "ticketUrl": "https://entradas.ticketlop.es/es/events/aaron-gomez-de-cerca",
+    "status": "",
+    "tag": ""
+  },
+  {
+    "id": "ev-gracias-lanzarote-20261015",
+    "date": "2026-10-15",
+    "title": "GRACIAS — Estreno Absoluto",
+    "venue": "Teatro Municipal de San Bartolomé, Lanzarote",
+    "time": "20:30",
+    "ticketUrl": "https://www.ecoentradas.com/elegirsesion/3171",
+    "status": "",
+    "tag": "Estreno"
+  },
+  {
+    "id": "ev-gracias-telde-20261016",
+    "date": "2026-10-16",
+    "title": "GRACIAS",
+    "venue": "Teatro Municipal Juan Ramón Jiménez (Telde), Gran Canaria",
+    "time": "20:30",
+    "ticketUrl": "https://www.tureservaonline.es/es/events/gracias",
+    "status": "",
+    "tag": ""
+  },
+  {
+    "id": "ev-gracias-ull-20261018",
+    "date": "2026-10-18",
+    "title": "GRACIAS",
+    "venue": "Paraninfo de la ULL (La Laguna), Tenerife",
+    "time": "19:00",
+    "ticketUrl": "https://www.ecoentradas.com/elegirsesion/3178",
+    "status": "",
+    "tag": ""
+  }
+]

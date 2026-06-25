@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel de agenda · Aarón Gómez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0c0c0d; --panel:#141416; --panel-2:#1b1b1e; --line:rgba(255,255,255,.08);
+    --white:#f4f2ee; --soft:#cfcdc7; --gray:#8c8a84; --gold:#d4a853; --gold-d:#b8923f;
+    --coral:#e86c5a; --coral-d:#c95545; --green:#4ecb71; --red:#e05555; --amber:#f5a623;
+    --display:'Playfair Display',Georgia,serif; --body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --r:12px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{
+    background:radial-gradient(1200px 600px at 80% -10%, rgba(212,168,83,.06), transparent 60%), var(--black);
+    color:var(--white); font-family:var(--body); font-weight:400; line-height:1.5;
+    -webkit-font-smoothing:antialiased; min-height:100vh;
+  }
+  a{color:var(--gold);}
+  .wrap{max-width:760px; margin:0 auto; padding:28px 20px 96px;}
+
+  /* Header */
+  header.bar{display:flex; align-items:center; gap:14px; padding-bottom:22px; border-bottom:1px solid var(--line); margin-bottom:26px;}
+  .brand{font-family:var(--display); font-size:1.15rem; font-weight:800; letter-spacing:.04em;}
+  .brand small{display:block; font-family:var(--body); font-weight:500; font-size:.62rem; letter-spacing:.32em; text-transform:uppercase; color:var(--gold); margin-top:3px;}
+  .conn{margin-left:auto; display:flex; align-items:center; gap:10px; font-size:.78rem; color:var(--gray);}
+  .dot{width:8px; height:8px; border-radius:50%; background:var(--gray);}
+  .dot.on{background:var(--green); box-shadow:0 0 0 4px rgba(78,203,113,.15);}
+  .linkbtn{background:none; border:none; color:var(--gray); cursor:pointer; font:inherit; font-size:.78rem; text-decoration:underline; padding:0;}
+  .linkbtn:hover{color:var(--soft);}
+
+  /* Cards / generic */
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:var(--r); padding:22px;}
+  h1{font-family:var(--display); font-size:1.5rem; margin:0 0 6px;}
+  h2{font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; color:var(--gray); font-weight:600; margin:30px 0 12px;}
+  p.lead{color:var(--soft); font-size:.95rem; margin:0 0 16px;}
+
+  /* Setup */
+  .steps{margin:14px 0 18px; padding:0; list-style:none; counter-reset:s;}
+  .steps li{position:relative; padding:8px 0 8px 34px; color:var(--soft); font-size:.9rem; border-bottom:1px dashed var(--line);}
+  .steps li:last-child{border-bottom:none;}
+  .steps li::before{counter-increment:s; content:counter(s); position:absolute; left:0; top:7px; width:22px; height:22px; border-radius:50%; background:var(--gold); color:#1a1408; font-weight:700; font-size:.72rem; display:flex; align-items:center; justify-content:center;}
+  code.kbd{background:var(--panel-2); border:1px solid var(--line); border-radius:6px; padding:1px 7px; font-size:.82em; color:var(--gold);}
+
+  label{display:block; font-size:.78rem; font-weight:600; color:var(--soft); margin:0 0 6px; letter-spacing:.01em;}
+  label .req{color:var(--coral);}
+  .hint{font-size:.74rem; color:var(--gray); margin:5px 0 0;}
+  input[type=text],input[type=url],input[type=date],input[type=time],input[type=password],select,textarea{
+    width:100%; background:var(--panel-2); border:1px solid var(--line); color:var(--white);
+    border-radius:9px; padding:11px 12px; font:inherit; font-size:.92rem; outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  input:focus,select:focus,textarea:focus{border-color:var(--gold); box-shadow:0 0 0 3px rgba(212,168,83,.15);}
+  input::placeholder{color:#66645f;}
+  select{appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238c8a84' d='M6 8 0 0h12z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:34px;}
+
+  .btn{display:inline-flex; align-items:center; gap:8px; border:none; border-radius:999px; cursor:pointer; font:inherit; font-weight:600; font-size:.88rem; padding:11px 20px; transition:transform .12s, opacity .15s, background .15s;}
+  .btn:active{transform:translateY(1px);}
+  .btn-gold{background:var(--gold); color:#1a1408;}
+  .btn-gold:hover{background:var(--gold-d);}
+  .btn-coral{background:var(--coral); color:#fff;}
+  .btn-coral:hover{background:var(--coral-d);}
+  .btn-ghost{background:transparent; color:var(--soft); border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--gold); color:var(--white);}
+  .btn-danger{background:transparent; color:var(--red); border:1px solid rgba(224,85,85,.4);}
+  .btn-danger:hover{background:rgba(224,85,85,.1);}
+  .btn:disabled{opacity:.4; cursor:not-allowed;}
+  .btn.sm{padding:7px 14px; font-size:.8rem;}
+
+  /* Toolbar */
+  .toolbar{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:6px;}
+  .toolbar .spacer{flex:1;}
+  .savewrap{display:flex; align-items:center; gap:10px;}
+  .unsaved{font-size:.78rem; color:var(--amber); display:none;}
+  .unsaved.show{display:inline;}
+
+  /* Event list */
+  .ev{display:grid; grid-template-columns:64px 1fr auto; gap:16px; align-items:center; background:var(--panel); border:1px solid var(--line); border-radius:var(--r); padding:14px 16px; margin-bottom:10px;}
+  .ev.past{opacity:.6;}
+  .ev-date{text-align:center; border-right:1px solid var(--line); padding-right:14px;}
+  .ev-date .d{font-family:var(--display); font-size:1.6rem; font-weight:800; color:var(--gold); line-height:1;}
+  .ev-date .m{font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gray); margin-top:3px;}
+  .ev-main h3{margin:0 0 4px; font-size:1rem; font-weight:600;}
+  .ev-main .meta{margin:0; font-size:.82rem; color:var(--gray);}
+  .ev-main .pills{margin-top:7px; display:flex; gap:6px; flex-wrap:wrap;}
+  .pill{font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:3px 8px; border-radius:999px; border:1px solid var(--line); color:var(--gray);}
+  .pill.gold{color:var(--gold); border-color:rgba(212,168,83,.4);}
+  .pill.coral{color:#fff; background:var(--coral); border-color:var(--coral);}
+  .pill.red{color:var(--red); border-color:rgba(224,85,85,.5);}
+  .pill.amber{color:var(--amber); border-color:rgba(245,166,35,.5);}
+  .ev-actions{display:flex; flex-direction:column; gap:6px;}
+
+  details.archive{margin-top:6px;}
+  details.archive summary{cursor:pointer; list-style:none; color:var(--gray); font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; font-weight:600; padding:14px 0;}
+  details.archive summary::-webkit-details-marker{display:none;}
+  details.archive summary::after{content:" +"; color:var(--gold);}
+  details.archive[open] summary::after{content:" –";}
+
+  .empty{color:var(--gray); font-size:.9rem; padding:18px 0;}
+
+  /* Modal */
+  .overlay{position:fixed; inset:0; background:rgba(0,0,0,.66); backdrop-filter:blur(2px); display:none; align-items:flex-start; justify-content:center; padding:30px 16px; overflow:auto; z-index:50;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--panel); border:1px solid var(--line); border-radius:16px; width:100%; max-width:540px; padding:26px; margin:auto;}
+  .modal h2{margin:0 0 18px; color:var(--white); font-size:1.2rem; font-family:var(--display); letter-spacing:0; text-transform:none;}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .field{margin-bottom:16px;}
+  .field.full{grid-column:1 / -1;}
+  .modal-actions{display:flex; gap:10px; justify-content:flex-end; margin-top:8px;}
+  .modal-actions .spacer{flex:1;}
+
+  /* Toast */
+  .toasts{position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:10px; z-index:80;}
+  .toast{background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:10px; padding:13px 16px; font-size:.86rem; max-width:340px; box-shadow:0 12px 40px rgba(0,0,0,.5); animation:slide .25s ease;}
+  .toast.ok{border-left-color:var(--green);}
+  .toast.err{border-left-color:var(--red);}
+  @keyframes slide{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+
+  .hidden{display:none !important;}
+  @media (max-width:560px){
+    .grid{grid-template-columns:1fr;}
+    .ev{grid-template-columns:54px 1fr; }
+    .ev-actions{grid-column:1 / -1; flex-direction:row; margin-top:8px;}
+  }
+  @media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="bar">
+    <div class="brand">Aarón Gómez<small>Panel de agenda</small></div>
+    <div class="conn">
+      <span class="dot" id="connDot"></span>
+      <span id="connText">Sin conectar</span>
+      <button class="linkbtn hidden" id="logoutBtn">Desconectar</button>
+    </div>
+  </header>
+
+  <!-- ===== SETUP (sin token) ===== -->
+  <section id="setup" class="card">
+    <h1>Conectar el panel</h1>
+    <p class="lead">Para guardar cambios, el panel necesita una llave de acceso a tu repositorio de la web. Se pide una sola vez y se guarda solo en este navegador (no se sube a ninguna parte).</p>
+    <ol class="steps">
+      <li>Entra en <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained tokens</a> (estando con tu cuenta <code class="kbd">Procreartes</code>).</li>
+      <li>En <strong>Repository access</strong> elige <em>Only select repositories</em> → <code class="kbd">aarongomez-web</code>.</li>
+      <li>En <strong>Permissions → Repository permissions</strong>, busca <code class="kbd">Contents</code> y ponlo en <strong>Read and write</strong>.</li>
+      <li>Pulsa <strong>Generate token</strong>, copia el código (empieza por <code class="kbd">github_pat_</code>) y pégalo aquí abajo.</li>
+    </ol>
+    <div class="field">
+      <label for="tokenInput">Llave de acceso (token)</label>
+      <input type="password" id="tokenInput" placeholder="github_pat_..." autocomplete="off" spellcheck="false">
+      <p class="hint">Consejo: ponle caducidad larga al token para no tener que repetir esto a menudo.</p>
+    </div>
+    <button class="btn btn-gold" id="connectBtn">Conectar</button>
+  </section>
+
+  <!-- ===== APP (con token) ===== -->
+  <section id="app" class="hidden">
+    <div class="toolbar">
+      <button class="btn btn-gold" id="addBtn">+ Añadir fecha</button>
+      <button class="btn btn-ghost sm" id="reloadBtn">Recargar</button>
+      <span class="spacer"></span>
+      <div class="savewrap">
+        <span class="unsaved" id="unsaved">Tienes cambios sin guardar</span>
+        <button class="btn btn-coral" id="saveBtn" disabled>Guardar y publicar</button>
+      </div>
+    </div>
+
+    <div id="loadState" class="empty">Cargando agenda…</div>
+
+    <div id="listArea" class="hidden">
+      <h2>Próximas fechas</h2>
+      <div id="upcoming"></div>
+      <div id="upcomingEmpty" class="empty hidden">No hay fechas próximas. Pulsa “+ Añadir fecha” para crear una.</div>
+
+      <details class="archive" id="pastWrap">
+        <summary>Actuaciones anteriores (<span id="pastCount">0</span>)</summary>
+        <div id="past"></div>
+      </details>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Modal añadir/editar ===== -->
+<div class="overlay" id="overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h2 id="modalTitle">Añadir fecha</h2>
+    <input type="hidden" id="fId">
+    <div class="grid">
+      <div class="field full">
+        <label for="fTitle">Título del espectáculo <span class="req">*</span></label>
+        <input type="text" id="fTitle" placeholder="Ej.: DE CERCA — Humor e Improvisación">
+      </div>
+      <div class="field">
+        <label for="fDate">Fecha <span class="req">*</span></label>
+        <input type="date" id="fDate">
+        <p class="hint">Lo que ordena y archiva la fecha.</p>
+      </div>
+      <div class="field">
+        <label for="fTime">Hora</label>
+        <input type="time" id="fTime">
+      </div>
+      <div class="field full">
+        <label for="fVenue">Sala y lugar <span class="req">*</span></label>
+        <input type="text" id="fVenue" placeholder="Ej.: La Cantina del Arte — Vecindario, Gran Canaria">
+      </div>
+      <div class="field full">
+        <label for="fUrl">Enlace de entradas</label>
+        <input type="url" id="fUrl" placeholder="https://...">
+        <p class="hint">Opcional. Si lo dejas vacío, no aparece el botón de entradas.</p>
+      </div>
+      <div class="field">
+        <label for="fStatus">Estado</label>
+        <select id="fStatus">
+          <option value="">A la venta</option>
+          <option value="fewleft">Últimas plazas</option>
+          <option value="soldout">Agotado</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fTag">Etiqueta (opcional)</label>
+        <input type="text" id="fTag" placeholder="Ej.: Estreno">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-danger sm hidden" id="modalDelete">Borrar fecha</button>
+      <span class="spacer"></span>
+      <button class="btn btn-ghost" id="modalCancel">Cancelar</button>
+      <button class="btn btn-gold" id="modalSave">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ===== Configuración del repositorio =====
+  var OWNER = "Procreartes";
+  var REPO  = "aarongomez-web";
+  var BRANCH = "main";
+  var FILEPATH = "data/eventos.json";
+  var TOKEN_KEY = "ag_admin_token";
+  var API = "https://api.github.com/repos/" + OWNER + "/" + REPO + "/contents/" + FILEPATH;
+  var MESES = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
+
+  // ===== Estado =====
+  var token = null, sha = null, eventos = [], dirty = false;
+
+  // ===== Utilidades =====
+  var $ = function(id){ return document.getElementById(id); };
+  function b64encode(str){ return btoa(unescape(encodeURIComponent(str))); }
+  function b64decode(str){ return decodeURIComponent(escape(atob(str.replace(/\s/g,"")))); }
+  function esc(t){ return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  function uid(){ return "ev-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2,6); }
+  function parseFecha(s){ if(!s) return null; var p=String(s).split("-"); if(p.length<3) return null; var d=new Date(+p[0],+p[1]-1,+p[2]); return isNaN(d.getTime())?null:d; }
+
+  function toast(msg, kind){
+    var t=document.createElement("div");
+    t.className="toast"+(kind?" "+kind:"");
+    t.textContent=msg;
+    $("toasts").appendChild(t);
+    setTimeout(function(){ t.style.opacity="0"; t.style.transition="opacity .3s"; setTimeout(function(){ if(t.parentNode) t.parentNode.removeChild(t); },320); }, kind==="err"?6000:3800);
+  }
+
+  function setDirty(v){
+    dirty=v;
+    $("unsaved").classList.toggle("show", v);
+    $("saveBtn").disabled = !v;
+  }
+
+  function setConnected(on){
+    $("connDot").classList.toggle("on", on);
+    $("connText").textContent = on ? "Conectado" : "Sin conectar";
+    $("logoutBtn").classList.toggle("hidden", !on);
+  }
+
+  // ===== GitHub: cargar y guardar =====
+  function cargar(){
+    $("loadState").classList.remove("hidden");
+    $("loadState").textContent="Cargando agenda…";
+    $("listArea").classList.add("hidden");
+    fetch(API + "?ref=" + BRANCH, { headers: ghHeaders(), cache:"no-store" })
+      .then(function(r){
+        if(r.status===404){ sha=null; eventos=[]; return null; }      // archivo aún no existe
+        if(r.status===401 || r.status===403){ throw new Error("auth"); }
+        if(!r.ok){ throw new Error("HTTP "+r.status); }
+        return r.json();
+      })
+      .then(function(data){
+        if(data){
+          sha = data.sha;
+          var parsed = [];
+          try{ parsed = JSON.parse(b64decode(data.content)); }catch(e){ parsed=[]; }
+          eventos = Array.isArray(parsed) ? parsed : (parsed && parsed.eventos) || [];
+        }
+        setConnected(true);
+        setDirty(false);
+        render();
+      })
+      .catch(function(e){
+        if(e.message==="auth"){
+          toast("La llave no es válida o no tiene permiso de escritura en el repositorio. Revisa el token.", "err");
+          logout();
+        } else {
+          toast("No se pudo cargar la agenda: " + e.message, "err");
+          $("loadState").textContent="No se pudo cargar. Pulsa “Recargar” para reintentar.";
+        }
+      });
+  }
+
+  function ghHeaders(){
+    return { "Authorization":"Bearer "+token, "Accept":"application/vnd.github+json", "X-GitHub-Api-Version":"2022-11-28" };
+  }
+
+  function publicar(){
+    $("saveBtn").disabled=true;
+    $("saveBtn").textContent="Publicando…";
+    var contenido = JSON.stringify(eventos, null, 2) + "\n";
+    var body = { message:"Actualizar agenda desde el panel", content:b64encode(contenido), branch:BRANCH };
+    if(sha){ body.sha = sha; }
+    fetch(API, { method:"PUT", headers:ghHeaders(), body:JSON.stringify(body) })
+      .then(function(r){
+        if(r.status===409){ throw new Error("conflict"); }
+        if(r.status===401 || r.status===403){ throw new Error("auth"); }
+        if(!r.ok){ return r.json().then(function(j){ throw new Error(j.message||("HTTP "+r.status)); }); }
+        return r.json();
+      })
+      .then(function(data){
+        sha = data.content && data.content.sha ? data.content.sha : sha;
+        setDirty(false);
+        toast("Guardado. La web se actualizará en 1–2 minutos.", "ok");
+      })
+      .catch(function(e){
+        if(e.message==="conflict"){ toast("Alguien cambió el archivo mientras tanto. Pulsa “Recargar” y vuelve a aplicar tus cambios.", "err"); }
+        else if(e.message==="auth"){ toast("La llave perdió permiso de escritura. Reconéctate.", "err"); logout(); }
+        else { toast("No se pudo guardar: " + e.message, "err"); }
+      })
+      .then(function(){ $("saveBtn").textContent="Guardar y publicar"; $("saveBtn").disabled = !dirty; });
+  }
+
+  // ===== Render de la lista =====
+  function statusPill(ev){
+    if(ev.status==="soldout") return '<span class="pill red">Agotado</span>';
+    if(ev.status==="fewleft") return '<span class="pill amber">Últimas plazas</span>';
+    return ev.ticketUrl ? '<span class="pill gold">A la venta</span>' : '<span class="pill">Sin enlace</span>';
+  }
+
+  function evHTML(ev, past){
+    var f=parseFecha(ev.date);
+    var d=f?f.getDate():"–", m=f?MESES[f.getMonth()]:"";
+    var tag = ev.tag ? '<span class="pill coral">'+esc(ev.tag)+'</span>' : '';
+    return ''+
+      '<div class="ev'+(past?' past':'')+'">'+
+        '<div class="ev-date"><div class="d">'+esc(d)+'</div><div class="m">'+esc(m)+'</div></div>'+
+        '<div class="ev-main"><h3>'+esc(ev.title||"(sin título)")+'</h3>'+
+          '<p class="meta">'+esc(ev.venue||"")+(ev.time?' · '+esc(ev.time)+' h':'')+'</p>'+
+          '<div class="pills">'+statusPill(ev)+tag+'</div>'+
+        '</div>'+
+        '<div class="ev-actions">'+
+          '<button class="btn btn-ghost sm" data-edit="'+esc(ev.id)+'">Editar</button>'+
+        '</div>'+
+      '</div>';
+  }
+
+  function render(){
+    $("loadState").classList.add("hidden");
+    $("listArea").classList.remove("hidden");
+
+    var hoy=new Date(); hoy.setHours(0,0,0,0);
+    var prox=[], pas=[];
+    eventos.forEach(function(ev){
+      var f=parseFecha(ev.date);
+      if(!f){ prox.push(ev); return; }     // sin fecha válida → lo mostramos arriba para que se corrija
+      (f.getTime()<hoy.getTime()?pas:prox).push(ev);
+    });
+    prox.sort(function(a,b){ return (parseFecha(a.date)||0)-(parseFecha(b.date)||0); });
+    pas.sort(function(a,b){ return (parseFecha(b.date)||0)-(parseFecha(a.date)||0); });
+
+    $("upcoming").innerHTML = prox.map(function(e){ return evHTML(e,false); }).join("");
+    $("upcomingEmpty").classList.toggle("hidden", prox.length>0);
+    $("past").innerHTML = pas.map(function(e){ return evHTML(e,true); }).join("");
+    $("pastCount").textContent = pas.length;
+    $("pastWrap").classList.toggle("hidden", pas.length===0);
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-edit]"), function(b){
+      b.addEventListener("click", function(){ abrirModal(b.getAttribute("data-edit")); });
+    });
+  }
+
+  // ===== Modal =====
+  function abrirModal(id){
+    var ev = id ? eventos.filter(function(e){ return e.id===id; })[0] : null;
+    $("modalTitle").textContent = ev ? "Editar fecha" : "Añadir fecha";
+    $("fId").value = ev ? ev.id : "";
+    $("fTitle").value = ev ? (ev.title||"") : "";
+    $("fDate").value = ev ? (ev.date||"") : "";
+    $("fTime").value = ev ? (ev.time||"") : "";
+    $("fVenue").value = ev ? (ev.venue||"") : "";
+    $("fUrl").value = ev ? (ev.ticketUrl||"") : "";
+    $("fStatus").value = ev ? (ev.status||"") : "";
+    $("fTag").value = ev ? (ev.tag||"") : "";
+    $("modalDelete").classList.toggle("hidden", !ev);
+    $("overlay").classList.add("show");
+    setTimeout(function(){ $("fTitle").focus(); }, 50);
+  }
+  function cerrarModal(){ $("overlay").classList.remove("show"); }
+
+  function guardarModal(){
+    var title=$("fTitle").value.trim();
+    var date=$("fDate").value.trim();
+    var venue=$("fVenue").value.trim();
+    if(!title){ toast("Falta el título del espectáculo.", "err"); $("fTitle").focus(); return; }
+    if(!date){ toast("Falta la fecha.", "err"); $("fDate").focus(); return; }
+    if(!venue){ toast("Falta la sala y el lugar.", "err"); $("fVenue").focus(); return; }
+
+    var id=$("fId").value;
+    var obj={
+      id: id || uid(),
+      date: date,
+      title: title,
+      venue: venue,
+      time: $("fTime").value.trim(),
+      ticketUrl: $("fUrl").value.trim(),
+      status: $("fStatus").value,
+      tag: $("fTag").value.trim()
+    };
+    if(id){
+      eventos = eventos.map(function(e){ return e.id===id ? obj : e; });
+    } else {
+      eventos.push(obj);
+    }
+    setDirty(true);
+    render();
+    cerrarModal();
+    toast(id ? "Fecha actualizada. No olvides “Guardar y publicar”." : "Fecha añadida. No olvides “Guardar y publicar”.");
+  }
+
+  function borrarModal(){
+    var id=$("fId").value;
+    if(!id) return;
+    var ev = eventos.filter(function(e){ return e.id===id; })[0];
+    if(!confirm("¿Borrar “"+((ev&&ev.title)||"esta fecha")+"”? Podrás deshacerlo recargando si aún no has publicado.")) return;
+    eventos = eventos.filter(function(e){ return e.id!==id; });
+    setDirty(true);
+    render();
+    cerrarModal();
+    toast("Fecha borrada. No olvides “Guardar y publicar”.");
+  }
+
+  // ===== Conexión / sesión =====
+  function connect(){
+    var t=$("tokenInput").value.trim();
+    if(!t){ toast("Pega la llave de acceso para continuar.", "err"); return; }
+    token=t;
+    try{ localStorage.setItem(TOKEN_KEY, t); }catch(e){}
+    $("tokenInput").value="";
+    $("setup").classList.add("hidden");
+    $("app").classList.remove("hidden");
+    cargar();
+  }
+  function logout(){
+    token=null;
+    try{ localStorage.removeItem(TOKEN_KEY); }catch(e){}
+    setConnected(false);
+    $("app").classList.add("hidden");
+    $("setup").classList.remove("hidden");
+  }
+
+  // ===== Arranque =====
+  function init(){
+    try{ token=localStorage.getItem(TOKEN_KEY); }catch(e){ token=null; }
+    $("connectBtn").addEventListener("click", connect);
+    $("tokenInput").addEventListener("keydown", function(e){ if(e.key==="Enter") connect(); });
+    $("logoutBtn").addEventListener("click", function(){ if(!dirty || confirm("Tienes cambios sin guardar. ¿Salir igualmente?")) logout(); });
+    $("addBtn").addEventListener("click", function(){ abrirModal(null); });
+    $("reloadBtn").addEventListener("click", function(){ if(!dirty || confirm("Tienes cambios sin guardar que se perderán al recargar. ¿Continuar?")) cargar(); });
+    $("saveBtn").addEventListener("click", publicar);
+    $("modalSave").addEventListener("click", guardarModal);
+    $("modalCancel").addEventListener("click", cerrarModal);
+    $("modalDelete").addEventListener("click", borrarModal);
+    $("overlay").addEventListener("click", function(e){ if(e.target===$("overlay")) cerrarModal(); });
+    document.addEventListener("keydown", function(e){ if(e.key==="Escape" && $("overlay").classList.contains("show")) cerrarModal(); });
+    window.addEventListener("beforeunload", function(e){ if(dirty){ e.preventDefault(); e.returnValue=""; } });
+
+    if(token){
+      $("setup").classList.add("hidden");
+      $("app").classList.remove("hidden");
+      cargar();
+    }
+  }
+  if(document.readyState==="loading"){ document.addEventListener("DOMContentLoaded", init); } else { init(); }
+})();
+</script>
+</body>
+</html>
