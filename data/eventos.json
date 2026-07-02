@@ -30,6 +30,86 @@
     "tag": ""
   },
   {
+    "id": "ev-decerca-laspalmas-20260718",
+    "date": "2026-07-18",
+    "title": "DE CERCA — Humor e Improvisación",
+    "venue": "Las Palmas de Gran Canaria",
+    "time": "20:30",
+    "ticketUrl": "https://entradas.ticketlop.es/es/events/aaron-gomez-de-cerca-las-palmas-de-gran-canaria",
+    "status": "",
+    "tag": ""
+  },
+  {
+    "id": "ev-decerca-santacruz-20260725",
+    "date": "2026-07-25",
+    "title": "DE CERCA — Humor e Improvisación",
+    "venue": "Cafetería TEA — Santa Cruz de Tenerife",
+    "time": "20:30",
+    "ticketUrl": "https://entradas.ticketlop.es/es/events/aaron-gomez-de-cerca-tenerife-cafeteria-tea-santa-cruz",
+    "status": "",
+    "tag": ""
+  },
+  {
+    "id": "ev-decerca-lagraciosa-20260806",
+    "date": "2026-08-06",
+    "title": "DE CERCA — Humor e Improvisación",
+    "venue": "La Graciosa, Lanzarote",
+    "time": "20:30",
+    "ticketUrl": "https://entradas.ticketlop.es/es/events/aaron-gomez-de-cerca-la-graciosa",
+    "status": "",
+    "tag": ""
+  },
+  {
+    "id": "ev-decerca-arafo-20260808",
+    "date": "2026-08-08",
+    "title": "DE CERCA — Humor e Improvisación",
+    "venue": "Arafo, Tenerife",
+    "time": "20:30",
+    "ticketUrl": "https://entradas.ticketlop.es/es/events/aaron-gomez-de-cerca-arafo",
+    "status": "",
+    "tag": ""
+  },
+  {
+    "id": "ev-decerca-circulomercantil-20260814",
+    "date": "2026-08-14",
+    "title": "DE CERCA — Humor e Improvisación",
+    "venue": "Círculo Mercantil — Las Palmas de Gran Canaria",
+    "time": "20:30",
+    "ticketUrl": "https://entradas.ticketlop.es/es/events/aaron-gomez-de-cerca-las-palmas-de-gran-canaria-circulo-mercantil-de-las-palmas-gc",
+    "status": "",
+    "tag": ""
+  },
+  {
+    "id": "ev-decerca-lalaguna-20260821",
+    "date": "2026-08-21",
+    "title": "DE CERCA — Humor e Improvisación",
+    "venue": "San Cristóbal de La Laguna, Tenerife",
+    "time": "20:30",
+    "ticketUrl": "https://entradas.ticketlop.es/es/events/aaron-gomez-de-cerca-san-cristobal-de-la-laguna",
+    "status": "",
+    "tag": ""
+  },
+  {
+    "id": "ev-decerca-santacruz2-20260924",
+    "date": "2026-09-24",
+    "title": "DE CERCA — Humor e Improvisación",
+    "venue": "Santa Cruz de Tenerife",
+    "time": "20:30",
+    "ticketUrl": "https://entradas.ticketlop.es/es/events/aaron-gomez-de-cerca-santa-cruz-de-tenerife",
+    "status": "",
+    "tag": ""
+  },
+  {
+    "id": "ev-decerca-frontera-20261009",
+    "date": "2026-10-09",
+    "title": "DE CERCA — Humor e Improvisación",
+    "venue": "Frontera, El Hierro",
+    "time": "20:30",
+    "ticketUrl": "https://entradas.ticketlop.es/es/events/aaron-gomez-de-cerca-frontera",
+    "status": "",
+    "tag": ""
+  },
+  {
     "id": "ev-gracias-lanzarote-20261015",
     "date": "2026-10-15",
     "title": "GRACIAS — Estreno Absoluto",
